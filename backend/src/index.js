@@ -5,6 +5,7 @@ const response = require('./middlewares/response');
 const checkJwt = require('./middlewares/jwt');
 
 const authController = require('./controllers/auth');
+const crenteController = require('./controllers/crenteController');
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.use(cors());
 
 // /auth/sign-in
 // /auth/sign-up
-app.use('/auth', authController);
+app.use('/api/auth', authController);
+app.use('/api/crente', crenteController);
 
 app.get('/', (req, res)=>{
     return res.json('Api running...');
