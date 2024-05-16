@@ -9,7 +9,7 @@ export function getCurrentUser({commit}, data) {
 }
 
 export function login({commit}, data) {
-  return axiosClient.post('/auth/sign-in', data)
+  return axiosClient.post('/auth/login', data)
     .then(({data}) => {
       console.log(data.metadata)
       commit('setUser', data.data);
