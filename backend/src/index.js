@@ -7,6 +7,7 @@ const checkJwt = require('./middlewares/jwt');
 const authController = require('./controllers/auth');
 const crenteController = require('./controllers/crenteController');
 const increduloController = require('./controllers/increduloController');
+const enfermoController = require('./controllers/enfermoController');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(cors());
 app.use('/api/auth', authController);
 app.use('/api/crente', crenteController);
 app.use('/api/incredulo', increduloController)
+app.use('/api/enfermo', enfermoController)
 
 app.get('/', (req, res)=>{
     return res.json('Api running...');
