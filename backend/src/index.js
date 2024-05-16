@@ -9,6 +9,7 @@ const crenteController = require('./controllers/crenteController');
 const increduloController = require('./controllers/increduloController');
 const enfermoController = require('./controllers/enfermoController');
 const presidioController = require('./controllers/presidioController');
+const hospitalController = require('./controllers/hospitalController');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/crente', crenteController);
 app.use('/api/incredulo', increduloController)
 app.use('/api/enfermo', enfermoController)
 app.use('/api/presidio', presidioController)
+app.use('/api/hospital', hospitalController)
 
 app.get('/', (req, res)=>{
     return res.json('Api running...');
