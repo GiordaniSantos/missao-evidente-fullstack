@@ -4,8 +4,8 @@ const { Crente } = require('../models');
 const router = express.Router();
 
 router.get('/', async (req, res) =>{
-    const crente = await Crente.findAll();
-    return res.jsonOK(crente);
+    const crentes = await Crente.findAll();
+    return res.jsonOK(crentes);
 });
 
 router.get('/:id', async (req, res)=>{
