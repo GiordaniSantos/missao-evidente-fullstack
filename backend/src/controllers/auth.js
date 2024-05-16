@@ -39,6 +39,10 @@ router.post('/cadastrar', async (req, res) => {
     return res.jsonOK(newAccount, getMessage('user.signup.sucess'), { token, refreshToken });
 });
 
+router.post('/logout', async (req, res) => {
+    return res.jsonOK();
+});
+
 router.post('/refresh', async (req, res)=>{
     const token = getTokenFromHeaders(req.headers);
     if(!token) {
