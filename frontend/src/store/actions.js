@@ -11,7 +11,6 @@ export function getCurrentUser({commit}, data) {
 export function login({commit}, data) {
   return axiosClient.post('/auth/login', data)
     .then(({data}) => {
-      console.log(data.metadata)
       commit('setUser', data.data);
       commit('setToken', data.metadata.token)
       return data;
@@ -19,12 +18,58 @@ export function login({commit}, data) {
 }
 
 export function logout({commit}) {
-  return axiosClient.post('/logout')
-    .then((response) => {
+ 
       commit('setToken', null)
 
-      return response;
+   
+}
+
+// ----------- Visitas Crentes --------
+export function getVisitasCrentes({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setVisitaCrente', [true])
+  url = url || '/crente'
+  const params = {
+    per_page: state.visitasCrentes.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setVisitaCrente', [false, response.data])
     })
+    .catch(() => {
+      commit('setVisitaCrente', [false])
+    })
+}
+
+export function createVisitaCrente({commit}, visitaCrente) {
+
+    const form = new FormData();
+    form.append('nome', visitaCrente.nome);
+    visitaCrente = form;
+
+  return axiosClient.post('/crente', crente)
+}
+
+export function getVisitaCrente({commit}, id) {
+  return axiosClient.get(`/crente/${id}`)
+}
+
+export function deleteVisitaCrente({commit}, id) {
+  return axiosClient.delete(`/crente/${id}`)
+}
+
+export function updateVisitaCrente({commit}, visitaCrente) {
+  const id = visitaCrente.id
+    const form = new FormData();
+    form.append('id', visitaCrente.id);
+    form.append('nome', visitaCrente.nome);
+    form.append('_method', 'patch');
+    visitaCrente = form;
+  return axiosClient.post(`/crente/${id}`, visitaCrente)
 }
 
 
