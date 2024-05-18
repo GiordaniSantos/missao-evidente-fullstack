@@ -10,7 +10,11 @@ const axiosClient = axios.create({
 })
 
 axiosClient.interceptors.request.use(config => {
-  config.headers.Authorization = `Bearer ${store.state.user.token}`
+  config.headers.Authorization = `Bearer_${store.state.user.token}`
+  if(config.url != "/auth/login"){
+    config.params = config.params || {};
+    config.params.userId = store.state.user.data.id;
+  }
   return config;
 })
 
