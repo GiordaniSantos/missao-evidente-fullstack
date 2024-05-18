@@ -69,7 +69,7 @@ router.put('/:id', async (req, res) =>{
     const userId = req.query.userId;
 
     const { body } = req;
-    const fields = ['userId', 'nome', 'created_at'];
+    const fields = ['userId', 'nome', 'createdAt'];
 
     const crente  = await Crente.findOne({where: {id:id, userId}});
     if(!crente) return res.jsonNotFound();
