@@ -6,7 +6,7 @@ const store = createStore({
     state: {
         user: {
             token: sessionStorage.getItem('TOKEN'),
-            data: {}
+            data: sessionStorage.getItem('USER_DATA') ? JSON.parse(sessionStorage.getItem('USER_DATA')) : {}
         },
         visitasCrentes: {
             loading: false,

@@ -1,11 +1,15 @@
 
 export function setUser(state, user) {
   state.user.data = user;
+  if (user) {
+    sessionStorage.setItem('USER_DATA', JSON.stringify(user));
+  } else {
+    sessionStorage.removeItem('USER_DATA')
+  }
 }
 
 export function setToken(state, token) {
   state.user.token = token;
-  console.log(state.user.token)
   if (token) {
     sessionStorage.setItem('TOKEN', token);
   } else {
