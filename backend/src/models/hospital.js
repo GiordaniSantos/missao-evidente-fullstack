@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 
    
     Hospital.associate = (models) => {
-        Hospital.belongsTo(models.User, {foreignKey: 'userId', as: 'Users'});
+        Hospital.belongsTo(models.User, {foreignKey: 'userId', as: 'Users', onDelete: 'CASCADE'});
     };
 
     return Hospital;

@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 
    
     Crente.associate = (models) => {
-        Crente.belongsTo(models.User, {foreignKey: 'userId', as: 'Users'});
+        Crente.belongsTo(models.User, {foreignKey: 'userId', as: 'Users', onDelete: 'CASCADE'});
     };
 
     return Crente;

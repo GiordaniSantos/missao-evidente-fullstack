@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 
    
     Presidio.associate = (models) => {
-        Presidio.belongsTo(models.User, {foreignKey: 'userId', as: 'Users'});
+        Presidio.belongsTo(models.User, {foreignKey: 'userId', as: 'Users', onDelete: 'CASCADE'});
     };
 
     return Presidio;

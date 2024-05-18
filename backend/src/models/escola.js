@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 
    
     Escola.associate = (models) => {
-        Escola.belongsTo(models.User, {foreignKey: 'userId', as: 'Users'});
+        Escola.belongsTo(models.User, {foreignKey: 'userId', as: 'Users', onDelete: 'CASCADE'});
     };
 
     return Escola;

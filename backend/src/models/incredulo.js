@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 
    
     Incredulo.associate = (models) => {
-        Incredulo.belongsTo(models.User, {foreignKey: 'userId', as: 'Users'});
+        Incredulo.belongsTo(models.User, {foreignKey: 'userId', as: 'Users', onDelete: 'CASCADE'});
     };
 
     return Incredulo;
