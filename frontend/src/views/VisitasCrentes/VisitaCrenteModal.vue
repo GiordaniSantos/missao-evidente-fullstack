@@ -12,7 +12,7 @@
                 <Spinner v-if="loading" class="absolute left-0 top-0 bg-white right-0 bottom-0 flex items-center justify-center"/>
                 <header class="py-3 px-4 flex justify-between items-center">
                   <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                    {{ visitaCrente.id ? `Atualizar visitaCrente: "${props.visitaCrente.nome}"` : 'Criar novo visitaCrente' }}
+                    {{ visitaCrente.id ? `Atualizar visita ao crente: "${props.visitaCrente.nome}"` : 'Adicionar nova visita ao crente' }}
                   </DialogTitle>
                   <button @click="closeModal()" class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
@@ -22,8 +22,13 @@
                 </header>
                 <form @submit.prevent="onSubmit">
                   <div class="bg-white px-4 pt-5 pb-4">
-                    <CustomInput class="mb-2" v-model="visitaCrente.nome" label="Nome da visitaCrente"/>
-            
+                    <CustomInput class="mb-2" v-model="visitaCrente.nome" label="Nome do visitado"/>
+                    <flat-pickr v-model="visitaCrente.createdAt" class="block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm rounded-md" 
+                    :config="{
+                      enableTime: true,
+                      dateFormat: 'd/m/Y H:i',
+                      locale: PortugueseLocale
+                    }"/>
                     
                   </div>
                   <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -50,16 +55,23 @@
     import store from "../../store/index.js";
     import Spinner from "../../components/core/Spinner.vue";
     import Swal from 'sweetalert2'
-  
+    import flatPickr from "vue-flatpickr-component";
+    import "flatpickr/dist/flatpickr.css";
+    import {Portuguese as PortugueseLocale} from 'flatpickr/dist/l10n/pt.js';
+
     const visitaCrente = ref({
       id: props.visitaCrente.id,
       nome: props.visitaCrente.nome,
+      createdAt: props.visitaCrente.createdAt
     })
   
     const loading = ref(false)
   
     const props = defineProps({
-      modelValue: Boolean,
+      modelValue: {
+        type: Boolean,
+        default: false
+      },
       visitaCrente: {
         required: true,
         type: Object,
@@ -77,16 +89,9 @@
       visitaCrente.value = {
         id: props.visitaCrente.id,
         nome: props.visitaCrente.nome,
+        createdAt: props.visitaCrente.createdAt
       }
     })
-  
-    function isEmpty(obj) {
-      for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-          return false;
-      }
-      return true;
-    }
   
     function closeModal() {
       show.value = false

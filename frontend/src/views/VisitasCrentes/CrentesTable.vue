@@ -22,8 +22,11 @@
           <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection" @click="sortVisitasCrentes('id')">
             ID
           </TableHeaderCell>
-          <TableHeaderCell field="image" :sort-field="sortField" :sort-direction="sortDirection">
-            Nome
+          <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection">
+            Data
+          </TableHeaderCell>
+          <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection">
+            Nome Visitado
           </TableHeaderCell>
           <TableHeaderCell field="actions">
             Ações
@@ -44,6 +47,9 @@
         <tr v-for="(visitaCrente, index) of visitasCrentes.data">
           <td class="border-b p-2 ">
             {{ visitaCrente.id }}
+          </td>
+          <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
+            {{ formatDate(visitaCrente.createdAt) }}
           </td>
           <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
             {{ visitaCrente.nome }}
@@ -112,17 +118,19 @@
   import {computed, onMounted, ref} from "vue";
   import store from "../../store";
   import Spinner from "../../components/core/Spinner.vue";
-  import {PRODUCTS_PER_PAGE} from "../../constants";
+  import {ITENS_PER_PAGE} from "../../constants";
   import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
   import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
   import {PencilIcon, TrashIcon, Bars3Icon} from '@heroicons/vue/24/outline'
+  import moment from "moment/dist/moment"
+  import pt from "moment/dist/locale/pt-br"
   //import visitaCrenteModal from "./visitaCrenteModal.vue";
   import Swal from 'sweetalert2'
 
-  const perPage = ref(PRODUCTS_PER_PAGE);
+  const perPage = ref(ITENS_PER_PAGE);
   const search = ref('');
   const visitasCrentes = computed(() => store.state.visitasCrentes);
-  const sortField = ref('updated_at');
+  const sortField = ref('updatedAt');
   const sortDirection = ref('desc')
 
   const visitaCrente = ref({})
@@ -133,6 +141,10 @@
   onMounted(() => {
     getVisitasCrentes();
   })
+
+  const formatDate = (date) => {
+    return moment(date).format('dddd, D [de] MMMM [de] YYYY')+" às "+moment(date).format('HH:mm')+"h";
+  }
 
   function getForPage(ev, link) {
     ev.preventDefault();

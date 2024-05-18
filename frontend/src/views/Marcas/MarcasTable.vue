@@ -120,14 +120,14 @@
   import {computed, onMounted, ref} from "vue";
   import store from "../../store";
   import Spinner from "../../components/core/Spinner.vue";
-  import {PRODUCTS_PER_PAGE} from "../../constants";
+  import {ITENS_PER_PAGE} from "../../constants";
   import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
   import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
   import {PencilIcon, TrashIcon, Bars3Icon} from '@heroicons/vue/24/outline'
   import MarcaModal from "./MarcaModal.vue";
   import Swal from 'sweetalert2'
 
-  const perPage = ref(PRODUCTS_PER_PAGE);
+  const perPage = ref(ITENS_PER_PAGE);
   const search = ref('');
   const marcas = computed(() => store.state.marcas);
   const sortField = ref('updated_at');

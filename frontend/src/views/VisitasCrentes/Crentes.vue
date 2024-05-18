@@ -18,6 +18,7 @@
   const DEFAULT_VISITA_CRENTE = {
     id: '',
     nome: '',
+    createdAt: ''
   }
   
   const visitasCrentes = computed(() => store.state.visitaCrente);
