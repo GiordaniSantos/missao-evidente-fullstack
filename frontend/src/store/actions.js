@@ -46,12 +46,7 @@ export function getVisitasCrentes({commit, state}, {url = null, search = '', per
 }
 
 export function createVisitaCrente({commit}, visitaCrente) {
-
-    const form = new FormData();
-    form.append('nome', visitaCrente.nome);
-    visitaCrente = form;
-
-  return axiosClient.post('/crente', crente)
+  return axiosClient.post('/crente', visitaCrente)
 }
 
 export function getVisitaCrente({commit}, id) {
@@ -64,12 +59,7 @@ export function deleteVisitaCrente({commit}, id) {
 
 export function updateVisitaCrente({commit}, visitaCrente) {
   const id = visitaCrente.id
-    const form = new FormData();
-    form.append('id', visitaCrente.id);
-    form.append('nome', visitaCrente.nome);
-    form.append('_method', 'patch');
-    visitaCrente = form;
-  return axiosClient.post(`/crente/${id}`, visitaCrente)
+  return axiosClient.put(`/crente/${id}`, visitaCrente)
 }
 
 
