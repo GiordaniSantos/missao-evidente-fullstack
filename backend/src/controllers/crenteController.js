@@ -53,11 +53,15 @@ router.get('/:id', async (req, res)=>{
 });
 
 router.post('/', async(req, res) =>{
-    const userId = req.query.userId;
+    try{
+        const userId = req.query.userId;
 
-    const crente = await Crente.create({userId})
+        const crente = await Crente.create({userId})
 
-    return res.jsonOK(crente);
+        return res.jsonOK(crente);
+    }catch(error) {
+        return res.status(500).json({ message: 'Erro ao criar visita ao crente' });
+    }
 });
 
 router.put('/:id', async (req, res) =>{
