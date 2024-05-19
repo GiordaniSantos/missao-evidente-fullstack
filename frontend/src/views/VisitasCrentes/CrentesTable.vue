@@ -23,10 +23,10 @@
             ID
           </TableHeaderCell>
           <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection">
-            Data
+            Data da Visita
           </TableHeaderCell>
           <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection">
-            Nome Visitado
+            Nome do Visitado
           </TableHeaderCell>
           <TableHeaderCell field="actions">
             Ações
@@ -48,10 +48,10 @@
           <td class="border-b p-2 ">
             {{ visitaCrente.id }}
           </td>
-          <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
+          <td class="border-b p-2 max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">
             {{ formatDate(visitaCrente.createdAt) }}
           </td>
-          <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
+          <td class="border-b p-2 max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">
             {{ visitaCrente.nome }}
           </td>
           <td class="border-b p-2 ">
