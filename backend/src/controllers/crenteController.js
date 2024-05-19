@@ -20,13 +20,25 @@ router.get('/', async (req, res) =>{
         whereCondition.userId = userId;
     }
     if (search) {
-        whereCondition[Op.or] = [
+        whereCondition[Op.and] = [
             {
-            nome: {
+              nome: {
                 [Op.like]: `%${search}%`
+              }
             },
-            }
-        ];
+            /*{
+                createdAt: {
+                    [Op.eq]: search consulta por data especifica
+                },
+                ou consulta data incicio e data fim
+                {
+                createdAt: {
+                    [Op.gte]: startDate.toISOString(),
+                    [Op.lte]: endDate.toISOString()
+                }
+                }
+            }*/
+          ];
     }
     const crentes = await Crente.findAll({
         where: whereCondition,
