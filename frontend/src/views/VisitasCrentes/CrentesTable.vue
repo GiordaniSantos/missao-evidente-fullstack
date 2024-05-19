@@ -86,7 +86,7 @@
     </table>
     <div v-if="!visitasCrentes.loading" class="flex justify-between items-center mt-5">
       <div v-if="visitasCrentes.data.length">
-        Mostrando {{ visitasCrentes.from }} de {{ visitasCrentes.to }}
+        Mostrando página {{ visitasCrentes.page }} de {{ visitasCrentes.totalPage }}
       </div>
       <nav v-if="visitasCrentes.total > visitasCrentes.limit" class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px" aria-label="Pagination">
         <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
