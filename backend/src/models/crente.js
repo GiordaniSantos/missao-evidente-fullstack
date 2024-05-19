@@ -9,9 +9,12 @@ module.exports = (sequelize, DataTypes) => {
         nome: {
             type: DataTypes.STRING(150),
             allowNull: true,
+            validate: {
+                len: { args: [0, 150], msg: 'O campo nome deve ter no máximo 150 caracteres'}
+            }
         },
         userId: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
         },
     });
 

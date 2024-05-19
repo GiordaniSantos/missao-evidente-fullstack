@@ -2,6 +2,7 @@ const express = require('express');
 const { Crente } = require('../models');
 const { Op } = require('sequelize');
 const { pagination, paginationInfo } = require('../helpers/pagination');
+const { formatDate, isIso, checkIsDate } = require('../helpers/date')
 
 const router = express.Router();
 
@@ -12,8 +13,12 @@ router.get('/', async (req, res) =>{
     const sortField = req.query.sort_field || 'updatedAt';
     const sortDirection = req.query.sort_direction || 'DESC';
     const offset = (currentPage - 1) * perPage;
+    const userId = req.query.userId;
 
     const whereCondition = {};
+    if (userId) {
+        whereCondition.userId = userId;
+    }
     if (search) {
         whereCondition[Op.or] = [
             {
@@ -76,17 +81,30 @@ router.put('/:id', async (req, res) =>{
     const userId = req.query.userId;
 
     const { body } = req;
-    const fields = ['userId', 'nome', 'createdAt'];
 
     const crente  = await Crente.findOne({where: {id:id, userId}});
     if(!crente) return res.jsonNotFound();
+    if(body['createdAt'] && !isIso(body['createdAt'])){
+        if(!checkIsDate(body['createdAt'])) return res.status(422).json({ field: 'createdAt',message: 'valor inválido' })
+        crente.changed('createdAt', true);
+        const isoDate = formatDate(body['createdAt']);
+        crente.set('createdAt', isoDate,{raw: true});
+    }
+    crente.set('nome', body['nome']);
     
-    fields.map(fieldName=>{
-        const newValue = body[fieldName];
-        if(newValue!=undefined) crente[fieldName] = newValue
-    });
+    let validateErrors = await crente.validate().catch(err => err.errors);
 
-    await crente.save();
+    if(validateErrors.length > 0) {
+        let field =  validateErrors[0].path
+        let message =  validateErrors[0].message
+        
+        return res.status(422).json({ field,message })
+    }
+
+    await crente.save({
+        silent: true,
+        fields: ['nome','createdAt']
+    });
 
     return res.jsonOK(crente);
 });
