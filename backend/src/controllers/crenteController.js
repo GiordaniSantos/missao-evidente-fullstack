@@ -65,14 +65,20 @@ router.get('/:id', async (req, res)=>{
 });
 
 router.post('/', async(req, res) =>{
-    try{
-        const userId = req.query.userId;
+    const userId = req.query.userId;
 
-        const crente = await Crente.create({userId})
-
+    try {
+        const crente = await Crente.create({userId});
         return res.jsonOK(crente);
-    }catch(error) {
-        return res.status(500).json({ message: 'Erro ao criar visita ao crente' });
+    } catch (err) {
+        let validateErrors = err.errors;
+        if(validateErrors.length > 0) {
+            let field =  validateErrors[0].path
+            let message =  validateErrors[0].message
+            
+            return res.status(422).json({ field,message })
+        }
+        return res.status(500).json({ message: 'Erro ao criar o registro.' });
     }
 });
 
@@ -92,7 +98,7 @@ router.put('/:id', async (req, res) =>{
     }
     crente.set('nome', body['nome']);
     
-    let validateErrors = await crente.validate().catch(err => err.errors);
+    let validateErrors = await crente.validate({fields: ['nome']}).catch(err => err.errors);
 
     if(validateErrors.length > 0) {
         let field =  validateErrors[0].path

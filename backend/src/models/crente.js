@@ -15,6 +15,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         userId: {
             type: DataTypes.INTEGER,
+            validate: {
+                async isValidUserId(value) {
+                    const userExists = await sequelize.models.User.count({ where: { id: value } });
+                    if (!userExists) {
+                        throw new Error('O usuário informado não existe.');
+                    }
+                }
+            }
         },
     });
 
