@@ -1,14 +1,17 @@
 const express = require('express');
 const { Crente } = require('../models');
 const { Op } = require('sequelize');
+const { pagination, paginationInfo } = require('../helpers/pagination');
 
 const router = express.Router();
 
 router.get('/', async (req, res) =>{
-    const perPage = req.query.per_page || 10;
+    const perPage = Math.max(0, parseInt(req.query.per_page || '10', 10));
+    const currentPage = Math.max(0, parseInt(req.query.page || '1', 10));
     const search = req.query.search || '';
     const sortField = req.query.sort_field || 'updatedAt';
     const sortDirection = req.query.sort_direction || 'DESC';
+    const offset = (currentPage - 1) * perPage;
 
     const whereCondition = {};
     if (search) {
@@ -22,25 +25,29 @@ router.get('/', async (req, res) =>{
     }
     const crentes = await Crente.findAll({
         where: whereCondition,
-       
         order: [[sortField, sortDirection]],
         limit: perPage,
-        offset: req.query.page ? req.query.page * perPage : 0
+        offset: offset
     });
 
     const count = await Crente.count({ where: whereCondition });
 
+    const linksPagination = pagination('crente', currentPage, count, perPage);
+    const links = paginationInfo('crente', currentPage, count, perPage);
+    
     return res.json({
         data: crentes,
+        links,
         meta: {
-          total: count,
-          per_page: perPage,
-          current_page: req.query.page || 0,
-          last_page: Math.ceil(count / perPage) - 1,
-          next_page: parseInt(req.query.page) + 1 || null,
-          prev_page: parseInt(req.query.page) - 1 || null
+            current_page: currentPage,
+            from: offset + 1,
+            links: linksPagination,
+            last_page: Math.ceil(count / perPage),
+            per_page: perPage,
+            to: offset + crentes.length,
+            total: count
         }
-      });
+    });
 });
 
 router.get('/:id', async (req, res)=>{

@@ -25,6 +25,7 @@ export function setVisitaCrente(state, [loading, data = null]) {
       data: data.data,
       links: data.meta?.links,
       page: data.meta.current_page,
+      totalPage: data.meta.last_page,
       limit: data.meta.per_page,
       from: data.meta.from,
       to: data.meta.to,

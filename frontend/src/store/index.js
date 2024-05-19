@@ -14,6 +14,7 @@ const store = createStore({
             links: [],
             from: null,
             to: null,
+            totalPage: null,
             page: 1,
             limit: null,
             total: null
