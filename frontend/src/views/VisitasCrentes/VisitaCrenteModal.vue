@@ -110,6 +110,10 @@
               closeModal()
             }
           })
+          .catch(error => {
+            Swal.fire({icon: 'error', title: 'Erro!', text: error.response.data.message,showConfirmButton: true})
+            loading.value = false;
+          });
       } else {
         store.dispatch('createVisitaCrente', visitaCrente.value)
           .then(response => {
@@ -120,7 +124,8 @@
               closeModal()
             }
           })
-          .catch(err => {
+          .catch(error => {
+            Swal.fire({icon: 'error', title: 'Erro!', text: error.response.data.message,showConfirmButton: true})
             loading.value = false;
           })
       }
