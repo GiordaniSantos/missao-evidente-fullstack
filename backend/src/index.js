@@ -11,6 +11,7 @@ const enfermoController = require('./controllers/enfermoController');
 const presidioController = require('./controllers/presidioController');
 const hospitalController = require('./controllers/hospitalController');
 const escolaController = require('./controllers/escolaController');
+const membresiaController = require('./controllers/membresiaController')
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/api/enfermo', enfermoController)
 app.use('/api/presidio', presidioController)
 app.use('/api/hospital', hospitalController)
 app.use('/api/escola', escolaController)
+app.use('/api/membresia', membresiaController)
 
 app.get('/', (req, res)=>{
     return res.json('Api running...');
