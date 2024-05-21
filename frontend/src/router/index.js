@@ -4,7 +4,6 @@ import Login from "../views/Login.vue"
 import RequestPassword from "../views/RequestPassword.vue"
 import ResetPassword from "../views/ResetPassword.vue"
 import AppLayout from '../components/AppLayout.vue'
-import Marcas from "../views/Marcas/Marcas.vue";
 import Crentes from "../views/VisitasCrentes/Crentes.vue";
 import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
@@ -28,11 +27,6 @@ const routes = [
                 path: 'dashboard',
                 name: 'app.dashboard',
                 component: Dashboard
-            },
-            {
-                path: 'marcas',
-                name: 'app.marcas',
-                component: Marcas
             },
             {
                 path: 'visitas-crentes',

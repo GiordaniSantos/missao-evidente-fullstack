@@ -30,16 +30,6 @@ const store = createStore({
             limit: null,
             total: null
         },
-        marcas: {
-            loading: false,
-            data: [],
-            links: [],
-            from: null,
-            to: null,
-            page: 1,
-            limit: null,
-            total: null
-        },
         membresiaOptions: [
             {key: 'Primeiro Domingo', text: 'Primeiro Domingo'},
             {key: 'Segundo Domingo', text: 'Segundo Domingo'},
