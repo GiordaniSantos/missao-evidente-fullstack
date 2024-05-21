@@ -19,6 +19,17 @@ const store = createStore({
             limit: null,
             total: null
         },
+        membresias: {
+            loading: false,
+            data: [],
+            links: [],
+            from: null,
+            to: null,
+            totalPage: null,
+            page: 1,
+            limit: null,
+            total: null
+        },
         marcas: {
             loading: false,
             data: [],
@@ -29,14 +40,11 @@ const store = createStore({
             limit: null,
             total: null
         },
-        dateOptions: [
-            {key: '1d', text: 'Último Dia'},
-            {key: '1k', text: 'Última Semana'},
-            {key: '2k', text: '2 Últimas Semanas'},
-            {key: '1m', text: 'Último Mês'},
-            {key: '3m', text: '3 Últimos Meses'},
-            {key: '6m', text: '6 Últimos Meses'},
-            {key: 'all', text: 'Todo tempo'},
+        membresiaOptions: [
+            {key: 'Primeiro Domingo', text: 'Primeiro Domingo'},
+            {key: 'Segundo Domingo', text: 'Segundo Domingo'},
+            {key: 'Terceiro Domingo', text: 'Terceiro Domingo'},
+            {key: 'Quarto Domingo', text: 'Quarto Domingo'},
         ]
     },
     getters: {},

@@ -35,6 +35,24 @@ export function setVisitaCrente(state, [loading, data = null]) {
   state.visitasCrentes.loading = loading;
 }
 
+export function setMembresia(state, [loading, data = null]) {
+
+  if (data) {
+    state.membresias = {
+      ...state.membresias,
+      data: data.data,
+      links: data.meta?.links,
+      page: data.meta.current_page,
+      totalPage: data.meta.last_page,
+      limit: data.meta.per_page,
+      from: data.meta.from,
+      to: data.meta.to,
+      total: data.meta.total,
+    }
+  }
+  state.membresias.loading = loading;
+}
+
 export function setMarcas(state, [loading, data = null]) {
 
   if (data) {

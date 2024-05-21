@@ -6,6 +6,7 @@ import ResetPassword from "../views/ResetPassword.vue"
 import AppLayout from '../components/AppLayout.vue'
 import Marcas from "../views/Marcas/Marcas.vue";
 import Crentes from "../views/VisitasCrentes/Crentes.vue";
+import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
 
@@ -37,6 +38,11 @@ const routes = [
                 path: 'visitas-crentes',
                 name: 'app.crentes',
                 component: Crentes
+            },
+            {
+                path: 'membresias',
+                name: 'app.membresias',
+                component: Membresias
             },
         ]
     },

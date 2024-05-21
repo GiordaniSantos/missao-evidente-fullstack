@@ -12,6 +12,7 @@
                   :value="props.modelValue"
                   :class="inputClasses"
                   @change="onChange($event.target.value)">
+            <option value="" disabled selected>Selecione...</option>
             <option v-for="option of selectOptions" :value="option.key">{{option.text}}</option>
           </select>
         </template>
@@ -50,7 +51,7 @@
                  @input="emit('update:modelValue', $event.target.value)"
                  :class="inputClasses"
                  :placeholder="label"
-                 step="0.01"/>
+                 step="1"/>
         </template>
         <span v-if="append"
               class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">

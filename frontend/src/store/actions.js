@@ -63,6 +63,44 @@ export function updateVisitaCrente({commit}, visitaCrente) {
 }
 
 
+// ----------- Visitas Crentes --------
+export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setMembresia', [true])
+  url = url || '/membresia'
+  const params = {
+    per_page: state.membresias.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setMembresia', [false, response.data])
+    })
+    .catch(() => {
+      commit('setMembresia', [false])
+    })
+}
+
+export function createMembresia({commit}, membresia) {
+  return axiosClient.post('/membresia', membresia)
+}
+
+export function getMembresia({commit}, id) {
+  return axiosClient.get(`/membresia/${id}`)
+}
+
+export function deleteMembresia({commit}, id) {
+  return axiosClient.delete(`/membresia/${id}`)
+}
+
+export function updateMembresia({commit}, membresia) {
+  const id = membresia.id
+  return axiosClient.put(`/membresia/${id}`, membresia)
+}
+
 // ----------- MARCAS --------
 export function getMarcas({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMarcas', [true])
