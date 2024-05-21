@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
                 notNull: { msg: 'Escolha uma opção'},
                 isIn: {
                     args: [['Primeiro Domingo', 'Segundo Domingo', 'Terceiro Domingo', 'Quarto Domingo']],
-                    msg: 'A opção informada é inválida. Escolha uma opção válida: Primeiro Domingo, Segundo Domingo, Terceiro Domingo, Quarto Domingo.',
+                    msg: 'A opção informada é inválida. Escolha uma opção válida: Primeiro Domingo, Segundo Domingo, Terceiro Domingo ou Quarto Domingo.',
                 },
             }
         },

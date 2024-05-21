@@ -10,7 +10,7 @@ router.get('/', async (req, res) =>{
     const perPage = Math.max(0, parseInt(req.query.per_page || '10', 10));
     const currentPage = Math.max(0, parseInt(req.query.page || '1', 10));
     const search = req.query.search || '';
-    const sortField = req.query.sort_field || 'updatedAt';
+    const sortField = req.query.sort_field || 'createdAt';
     const sortDirection = req.query.sort_direction || 'DESC';
     const offset = (currentPage - 1) * perPage;
     const userId = req.query.userId;
@@ -104,7 +104,7 @@ router.put('/:id', async (req, res) =>{
     const membresia  = await Membresia.findOne({where: {id:id, userId}});
     if(!membresia) return res.jsonNotFound();
     if(body['createdAt'] && !isIso(body['createdAt'])){
-        if(!checkIsDate(body['createdAt'])) return res.status(422).json({ field: 'createdAt',message: 'valor inválido' })
+        if(!checkIsDate(body['createdAt'])) return res.status(422).json({ field: 'createdAt',message: 'Valor de Data Inválido' })
         membresia.changed('createdAt', true);
         const isoDate = formatDate(body['createdAt']);
         membresia.set('createdAt', isoDate,{raw: true});
@@ -123,7 +123,7 @@ router.put('/:id', async (req, res) =>{
 
     await membresia.save({
         silent: true,
-        fields: ['nome','createdAt']
+        fields: ['nome', 'quantidade', 'createdAt']
     });
 
     return res.jsonOK(membresia);
