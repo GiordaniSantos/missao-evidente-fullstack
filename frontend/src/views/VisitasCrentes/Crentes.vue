@@ -12,6 +12,7 @@
 <script setup>
   import {computed, onMounted, ref} from "vue";
   import store from "../../store";
+  import Swal from 'sweetalert2'
   import VisitaCrenteModal from "./VisitaCrenteModal.vue";
   import CrentesTable from "./CrentesTable.vue";
   
@@ -21,12 +22,24 @@
     createdAt: ''
   }
   
-  const visitasCrentes = computed(() => store.state.visitaCrente);
-  
   const visitaCrenteModel = ref({...DEFAULT_VISITA_CRENTE})
   const showVisitaCrente = ref(false);
   
   function showAddNewModal() {
+    store.dispatch('createVisitaCrente')
+      .then(response => {
+        if (response.status === 200) {
+          Swal.fire({icon: 'success', title: 'Registro Criado com Sucesso!',showConfirmButton: false,timer: 1500})
+          store.dispatch('getVisitasCrentes')
+          closeModal()
+        }
+      })
+      .catch(error => {
+        Swal.fire({icon: 'error', title: 'Erro!', text: error.response.data.message,showConfirmButton: true})
+      })
+  }
+
+  function showEditModal() {
     showVisitaCrente.value = true
   }
   
@@ -34,12 +47,12 @@
     store.dispatch('getVisitaCrente', visitaCrente.id)
       .then(({data}) => {
         visitaCrenteModel.value = data
-        showAddNewModal();
+        showEditModal();
       })
   }
   
-  function onModalClose() {
-    visitaCrenteModel.value = {...DEFAULT_VISITA_CRENTE}
+  function onModalClose(value) {
+    visitaCrenteModel.value = value;
   }
 </script>
     

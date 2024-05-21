@@ -12,7 +12,7 @@
                 <Spinner v-if="loading" class="absolute left-0 top-0 bg-white right-0 bottom-0 flex items-center justify-center"/>
                 <header class="py-3 px-4 flex justify-between items-center">
                   <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                    {{ visitaCrente.id ? `Atualizar visita ao crente: "${props.visitaCrente.nome ? props.visitaCrente.nome : 'Sem nome'}"` : 'Adicionar nova visita ao crente' }}
+                    {{`Atualizar visita ao crente: "${props.visitaCrente.nome ? props.visitaCrente.nome : 'Sem nome'}"`}}
                   </DialogTitle>
                   <button @click="closeModal()" class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
@@ -29,11 +29,10 @@
                       dateFormat: 'd/m/Y H:i',
                       locale: PortugueseLocale
                     }"/>
-                    
                   </div>
                   <footer class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button type="submit" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-950">
-                      {{ visitaCrente.id ? 'Editar' : 'Cadastrar' }}
+                      {{'Editar'}}
                     </button>
                     <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="closeModal" ref="cancelButtonRef">
                       Cancelar
@@ -95,40 +94,24 @@
   
     function closeModal() {
       show.value = false
-      emit('close')
+      emit('close', visitaCrente.value)
     }
   
     function onSubmit() {
       loading.value = true
-      if (visitaCrente.value.id) {
-        store.dispatch('updateVisitaCrente', visitaCrente.value)
-          .then(response => {
-            loading.value = false;
-            if (response.status === 200) {
-              Swal.fire({icon: 'success', title: 'Registro Atualizado com Sucesso!',showConfirmButton: false,timer: 1500})
-              store.dispatch('getVisitasCrentes')
-              closeModal()
-            }
-          })
-          .catch(error => {
-            Swal.fire({icon: 'error', title: 'Erro!', text: error.response.data.message,showConfirmButton: true})
-            loading.value = false;
-          });
-      } else {
-        store.dispatch('createVisitaCrente', visitaCrente.value)
-          .then(response => {
-            loading.value = false;
-            if (response.status === 201) {
-              Swal.fire({icon: 'success', title: 'Registro Cadastrado com Sucesso!',showConfirmButton: false,timer: 1500})
-              store.dispatch('getVisitasCrentes')
-              closeModal()
-            }
-          })
-          .catch(error => {
-            Swal.fire({icon: 'error', title: 'Erro!', text: error.response.data.message,showConfirmButton: true})
-            loading.value = false;
-          })
-      }
+      store.dispatch('updateVisitaCrente', visitaCrente.value)
+        .then(response => {
+          loading.value = false;
+          if (response.status === 200) {
+            Swal.fire({icon: 'success', title: 'Registro Atualizado com Sucesso!',showConfirmButton: false,timer: 1500})
+            store.dispatch('getVisitasCrentes')
+            closeModal()
+          }
+        })
+        .catch(error => {
+          Swal.fire({icon: 'error', title: 'Erro!', text: error.response.data.message,showConfirmButton: true})
+          loading.value = false;
+        });
     }
   </script>
   
