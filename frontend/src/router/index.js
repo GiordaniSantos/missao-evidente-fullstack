@@ -5,6 +5,7 @@ import RequestPassword from "../views/RequestPassword.vue"
 import ResetPassword from "../views/ResetPassword.vue"
 import AppLayout from '../components/AppLayout.vue'
 import Crentes from "../views/VisitasCrentes/Crentes.vue";
+import Incredulos from '../views/VisitasIncredulos/Incredulos.vue';
 import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
@@ -32,6 +33,11 @@ const routes = [
                 path: 'visitas-crentes',
                 name: 'app.crentes',
                 component: Crentes
+            },
+            {
+                path: 'visitas-incredulos',
+                name: 'app.incredulos',
+                component: Incredulos
             },
             {
                 path: 'membresias',

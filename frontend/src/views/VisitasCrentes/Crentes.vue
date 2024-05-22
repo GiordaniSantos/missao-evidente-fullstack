@@ -31,7 +31,6 @@
         if (response.status === 200) {
           Swal.fire({icon: 'success', title: 'Registro Criado com Sucesso!',showConfirmButton: false,timer: 1500})
           store.dispatch('getVisitasCrentes')
-          closeModal()
         }
       })
       .catch(error => {
