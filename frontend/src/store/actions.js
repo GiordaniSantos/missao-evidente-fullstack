@@ -178,6 +178,44 @@ export function updateVisitaEnfermo({commit}, visitaEnfermo) {
   return axiosClient.put(`/enfermo/${id}`, visitaEnfermo)
 }
 
+// ----------- Visitas Hospitais --------
+export function getVisitasHospitais({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setVisitaHospitais', [true])
+  url = url || '/hospital'
+  const params = {
+    per_page: state.visitasHospitais.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setVisitaHospital', [false, response.data])
+    })
+    .catch(() => {
+      commit('setVisitaHospital', [false])
+    })
+}
+
+export function createVisitaHospital({commit}, visitaHospital) {
+  return axiosClient.post('/hospital', visitaHospital)
+}
+
+export function getVisitaHospital({commit}, id) {
+  return axiosClient.get(`/hospital/${id}`)
+}
+
+export function deleteVisitaHospital({commit}, id) {
+  return axiosClient.delete(`/hospital/${id}`)
+}
+
+export function updateVisitaHospital({commit}, visitaHospital) {
+  const id = visitaHospital.id
+  return axiosClient.put(`/hospital/${id}`, visitaHospital)
+}
+
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMembresia', [true])
