@@ -30,6 +30,17 @@ const store = createStore({
             limit: null,
             total: null
         },
+        visitasPresidios: {
+            loading: false,
+            data: [],
+            links: [],
+            from: null,
+            to: null,
+            totalPage: null,
+            page: 1,
+            limit: null,
+            total: null
+        },
         membresias: {
             loading: false,
             data: [],
@@ -41,12 +52,6 @@ const store = createStore({
             limit: null,
             total: null
         },
-        membresiaOptions: [
-            {key: 'Primeiro Domingo', text: 'Primeiro Domingo'},
-            {key: 'Segundo Domingo', text: 'Segundo Domingo'},
-            {key: 'Terceiro Domingo', text: 'Terceiro Domingo'},
-            {key: 'Quarto Domingo', text: 'Quarto Domingo'},
-        ]
     },
     getters: {},
     actions,

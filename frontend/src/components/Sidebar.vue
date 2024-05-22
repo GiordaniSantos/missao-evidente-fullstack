@@ -180,7 +180,7 @@
               </router-link>
             </MenuItem>
             <MenuItem v-slot="{ active }">
-              <router-link to="{name: 'app.crentes'}" 
+              <router-link :to="{name: 'app.presidios'}" 
                 active-class="text-white bg-indigo-600"
                 exact-active-class="text-white bg-indigo-600"
                 :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'group flex w-full items-center rounded-md px-2 py-2 text-sm',]">

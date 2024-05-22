@@ -6,6 +6,7 @@ import ResetPassword from "../views/ResetPassword.vue"
 import AppLayout from '../components/AppLayout.vue'
 import Crentes from "../views/VisitasCrentes/Crentes.vue";
 import Incredulos from '../views/VisitasIncredulos/Incredulos.vue';
+import Presidios from '../views/VisitasPresidios/Presidios.vue'
 import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
@@ -38,6 +39,11 @@ const routes = [
                 path: 'visitas-incredulos',
                 name: 'app.incredulos',
                 component: Incredulos
+            },
+            {
+                path: 'visitas-presidios',
+                name: 'app.presidios',
+                component: Presidios
             },
             {
                 path: 'membresias',
