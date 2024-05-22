@@ -107,6 +107,24 @@ export function setVisitaHospital(state, [loading, data = null]) {
   state.visitasHospitais.loading = loading;
 }
 
+export function setVisitaEscola(state, [loading, data = null]) {
+
+  if (data) {
+    state.visitasEscolas = {
+      ...state.visitasEscolas,
+      data: data.data,
+      links: data.meta?.links,
+      page: data.meta.current_page,
+      totalPage: data.meta.last_page,
+      limit: data.meta.per_page,
+      from: data.meta.from,
+      to: data.meta.to,
+      total: data.meta.total,
+    }
+  }
+  state.visitasEscolas.loading = loading;
+}
+
 export function setMembresia(state, [loading, data = null]) {
 
   if (data) {

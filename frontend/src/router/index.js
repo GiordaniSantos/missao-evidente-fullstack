@@ -9,6 +9,7 @@ import Incredulos from '../views/VisitasIncredulos/Incredulos.vue';
 import Presidios from '../views/VisitasPresidios/Presidios.vue'
 import Enfermos from '../views/VisitasEnfermos/Enfermos.vue'
 import Hospitais from '../views/VisitasHospitais/Hospitais.vue'
+import Escolas from '../views/VisitasEscolas/Escolas.vue'
 import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
@@ -56,6 +57,11 @@ const routes = [
                 path: 'visitas-hospitais',
                 name: 'app.hospitais',
                 component: Hospitais
+            },
+            {
+                path: 'visitas-escolas',
+                name: 'app.escolas',
+                component: Escolas
             },
             {
                 path: 'membresias',

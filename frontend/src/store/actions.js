@@ -216,6 +216,45 @@ export function updateVisitaHospital({commit}, visitaHospital) {
   return axiosClient.put(`/hospital/${id}`, visitaHospital)
 }
 
+
+// ----------- Visitas Escolas --------
+export function getVisitasEscolas({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setVisitaEscolas', [true])
+  url = url || '/escola'
+  const params = {
+    per_page: state.visitasEscolas.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setVisitaEscola', [false, response.data])
+    })
+    .catch(() => {
+      commit('setVisitaEscola', [false])
+    })
+}
+
+export function createVisitaEscola({commit}, visitaEscola) {
+  return axiosClient.post('/escola', visitaEscola)
+}
+
+export function getVisitaEscola({commit}, id) {
+  return axiosClient.get(`/escola/${id}`)
+}
+
+export function deleteVisitaEscola({commit}, id) {
+  return axiosClient.delete(`/escola/${id}`)
+}
+
+export function updateVisitaEscola({commit}, visitaEscola) {
+  const id = visitaEscola.id
+  return axiosClient.put(`/escola/${id}`, visitaEscola)
+}
+
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMembresia', [true])
