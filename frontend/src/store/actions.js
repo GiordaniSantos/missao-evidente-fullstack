@@ -139,6 +139,45 @@ export function updateVisitaPresidio({commit}, visitaPresidio) {
   return axiosClient.put(`/presidio/${id}`, visitaPresidio)
 }
 
+
+// ----------- Visitas Enfermos --------
+export function getVisitasEnfermos({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setVisitaEnfermo', [true])
+  url = url || '/enfermo'
+  const params = {
+    per_page: state.visitasEnfermos.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setVisitaEnfermo', [false, response.data])
+    })
+    .catch(() => {
+      commit('setVisitaEnfermo', [false])
+    })
+}
+
+export function createVisitaEnfermo({commit}, visitaEnfermo) {
+  return axiosClient.post('/enfermo', visitaEnfermo)
+}
+
+export function getVisitaEnfermo({commit}, id) {
+  return axiosClient.get(`/enfermo/${id}`)
+}
+
+export function deleteVisitaEnfermo({commit}, id) {
+  return axiosClient.delete(`/enfermo/${id}`)
+}
+
+export function updateVisitaEnfermo({commit}, visitaEnfermo) {
+  const id = visitaEnfermo.id
+  return axiosClient.put(`/enfermo/${id}`, visitaEnfermo)
+}
+
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMembresia', [true])
