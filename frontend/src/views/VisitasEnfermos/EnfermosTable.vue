@@ -22,10 +22,10 @@
             <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection" @click="sortVisitasEnfermos('id')">
               ID
             </TableHeaderCell>
-            <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection">
+            <TableHeaderCell field="createdAt" :sort-field="sortField" :sort-direction="sortDirection" @click="sortVisitasEnfermos('createdAt')">
               Data da Visita
             </TableHeaderCell>
-            <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection">
+            <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection" @click="sortVisitasEnfermos('nome')">
               Nome do Visitado
             </TableHeaderCell>
             <TableHeaderCell field="actions">
