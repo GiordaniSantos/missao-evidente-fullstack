@@ -57,8 +57,8 @@
             <td class="border-b p-2 ">
               <Menu as="div" class="relative inline-block text-left">
                 <div>
-                  <MenuButton class="inline-flex items-center justify-center w-full justify-center rounded-full w-10 h-10 bg-black bg-opacity-0 text-sm font-medium text-white hover:bg-opacity-5 focus:bg-opacity-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    <Bars3Icon class="mr-2 h-5 w-5 text-indigo-400" aria-hidden="true"/>
+                  <MenuButton class="inline-flex items-center justify-center w-full justify-center rounded-full w-10 h-10 bg-opacity-0 text-sm font-medium text-white hover:bg-opacity-5 focus:bg-opacity-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                    <PlusCircleIcon class="mr-2 h-5 w-5 text-indigo-400 hover:text-indigo-800" aria-hidden="true"/>
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition duration-100 ease-out" enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
@@ -121,7 +121,7 @@
     import {ITENS_PER_PAGE} from "../../constants";
     import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
     import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
-    import {PencilIcon, TrashIcon, Bars3Icon} from '@heroicons/vue/24/outline'
+    import {PencilIcon, TrashIcon, PlusCircleIcon} from '@heroicons/vue/24/outline'
     import moment from "moment/dist/moment"
     import pt from "moment/dist/locale/pt-br"
     //import visitaHospitalModal from "./visitaHospitalModal.vue";

@@ -1,7 +1,7 @@
 <template>
   <header class="flex justify-between items-center p-3 h-14 shadow bg-white">
     <button @click="emit('toggle-sidebar')" class="flex items-center justify-center rounded transition-colors w-8 h-8 text-gray-700 hover:bg-black/10">
-      <PowerIcon class="w-6"/>
+      <Bars3Icon class="w-6"/>
     </button>
     <Menu as="div" class="relative inline-block text-left">
       <MenuButton class="flex items-center">
@@ -41,7 +41,7 @@
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                 ]"
               >
-                <UsersIcon
+                <ArrowLeftOnRectangleIcon
                   :active="active"
                   class="mr-2 h-5 w-5 text-indigo-400"
                   aria-hidden="true"
@@ -57,7 +57,7 @@
 </template>
   
   <script setup>
-  import { UserIcon, ChevronUpDownIcon, PowerIcon, UsersIcon } from "@heroicons/vue/24/outline"
+  import { UserIcon, ChevronUpDownIcon, PowerIcon, Bars3Icon, UsersIcon, ArrowLeftOnRectangleIcon } from "@heroicons/vue/24/outline"
   import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
   import store from "../store";
   import router from "../router";
