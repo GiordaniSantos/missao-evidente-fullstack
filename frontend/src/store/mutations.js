@@ -125,6 +125,24 @@ export function setVisitaEscola(state, [loading, data = null]) {
   state.visitasEscolas.loading = loading;
 }
 
+export function setEstudo(state, [loading, data = null]) {
+
+  if (data) {
+    state.estudos = {
+      ...state.estudos,
+      data: data.data,
+      links: data.meta?.links,
+      page: data.meta.current_page,
+      totalPage: data.meta.last_page,
+      limit: data.meta.per_page,
+      from: data.meta.from,
+      to: data.meta.to,
+      total: data.meta.total,
+    }
+  }
+  state.estudos.loading = loading;
+}
+
 export function setMembresia(state, [loading, data = null]) {
 
   if (data) {
