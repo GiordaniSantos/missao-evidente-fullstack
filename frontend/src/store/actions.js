@@ -333,6 +333,45 @@ export function updateSermao({commit}, sermao) {
   return axiosClient.put(`/sermao/${id}`, sermao)
 }
 
+
+// ----------- Sermões --------
+export function getEstudosBiblicos({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setEstudoBiblico', [true])
+  url = url || '/estudo-biblico'
+  const params = {
+    per_page: state.estudosBiblicos.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setEstudoBiblico', [false, response.data])
+    })
+    .catch(() => {
+      commit('setEstudoBiblico', [false])
+    })
+}
+
+export function createEstudoBiblico({commit}, estudoBiblico) {
+  return axiosClient.post('/estudo-biblico', estudoBiblico)
+}
+
+export function getEstudoBiblico({commit}, id) {
+  return axiosClient.get(`/estudo-biblico/${id}`)
+}
+
+export function deleteEstudoBiblico({commit}, id) {
+  return axiosClient.delete(`/estudo-biblico/${id}`)
+}
+
+export function updateEstudoBiblico({commit}, estudoBiblico) {
+  const id = estudoBiblico.id
+  return axiosClient.put(`/estudo-biblico/${id}`, estudoBiblico)
+}
+
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMembresia', [true])

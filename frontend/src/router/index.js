@@ -12,6 +12,7 @@ import Hospitais from '../views/VisitasHospitais/Hospitais.vue'
 import Escolas from '../views/VisitasEscolas/Escolas.vue'
 import Estudos from '../views/Estudos/Estudos.vue'
 import Sermoes from '../views/Sermoes/Sermoes.vue'
+import EstudosBiblicos from '../views/EstudosBiblicos/EstudosBiblicos.vue'
 import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
@@ -74,6 +75,11 @@ const routes = [
                 path: 'sermoes',
                 name: 'app.sermoes',
                 component: Sermoes
+            },
+            {
+                path: 'estudos-biblicos',
+                name: 'app.estudosBiblicos',
+                component: EstudosBiblicos
             },
             {
                 path: 'membresias',
