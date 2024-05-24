@@ -161,6 +161,24 @@ export function setEstudoBiblico(state, [loading, data = null]) {
   state.estudosBiblicos.loading = loading;
 }
 
+export function setDiscipulado(state, [loading, data = null]) {
+
+  if (data) {
+    state.discipulados = {
+      ...state.discipulados,
+      data: data.data,
+      links: data.meta?.links,
+      page: data.meta.current_page,
+      totalPage: data.meta.last_page,
+      limit: data.meta.per_page,
+      from: data.meta.from,
+      to: data.meta.to,
+      total: data.meta.total,
+    }
+  }
+  state.discipulados.loading = loading;
+}
+
 export function setSermao(state, [loading, data = null]) {
 
   if (data) {
