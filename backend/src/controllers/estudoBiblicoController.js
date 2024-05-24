@@ -49,8 +49,8 @@ router.get('/', async (req, res) =>{
 
     const count = await EstudoBiblico.count({ where: whereCondition });
 
-    const linksPagination = pagination('estudobiblico', currentPage, count, perPage);
-    const links = paginationInfo('estudobiblico', currentPage, count, perPage);
+    const linksPagination = pagination('estudo-biblico', currentPage, count, perPage);
+    const links = paginationInfo('estudo-biblico', currentPage, count, perPage);
     
     return res.json({
         data: estudosBiblicos,
