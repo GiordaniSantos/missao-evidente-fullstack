@@ -14,7 +14,8 @@ const escolaController = require('./controllers/escolaController');
 const estudoController = require('./controllers/estudoController');
 const sermaoController = require('./controllers/sermaoController');
 const estudoBiblicoController = require('./controllers/estudoBiblicoController');
-const membresiaController = require('./controllers/membresiaController')
+const discipuladoController = require('./controllers/discipuladoController');
+const membresiaController = require('./controllers/membresiaController');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/escola', escolaController)
 app.use('/api/estudo', estudoController)
 app.use('/api/sermao', sermaoController)
 app.use('/api/estudo-biblico', estudoBiblicoController)
+app.use('/api/discipulado', discipuladoController)
 app.use('/api/membresia', membresiaController)
 
 app.get('/', (req, res)=>{
