@@ -85,6 +85,17 @@ const store = createStore({
             limit: null,
             total: null
         },
+        sermoes: {
+            loading: false,
+            data: [],
+            links: [],
+            from: null,
+            to: null,
+            totalPage: null,
+            page: 1,
+            limit: null,
+            total: null
+        },
         membresias: {
             loading: false,
             data: [],

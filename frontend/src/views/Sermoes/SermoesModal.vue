@@ -12,7 +12,7 @@
                 <Spinner v-if="loading" class="absolute left-0 top-0 bg-white right-0 bottom-0 flex items-center justify-center"/>
                 <header class="py-3 px-4 flex justify-between items-center">
                   <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                    {{`Atualizar visita à escola: "${props.visitaEscola.nome ? props.visitaEscola.nome : 'Sem nome'}"`}}
+                    {{`Atualizar Sermão: "${props.sermao.nome ? props.sermao.nome : 'Sem assunto'}"`}}
                   </DialogTitle>
                   <button @click="closeModal()" class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
@@ -22,8 +22,8 @@
                 </header>
                 <form @submit.prevent="onSubmit">
                   <div class="bg-white px-4 pt-5 pb-4">
-                    <CustomInput class="mb-2" v-model="visitaEscola.nome" label="Nome do visitado"/>
-                    <flat-pickr v-model="visitaEscola.createdAt" class="block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm rounded-md" 
+                    <CustomInput class="mb-2" v-model="sermao.nome" label="Assunto"/>
+                    <flat-pickr v-model="sermao.createdAt" class="block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm rounded-md" 
                     :config="{
                       enableTime: true,
                       dateFormat: 'd/m/Y H:i',
@@ -57,11 +57,11 @@
     import flatPickr from "vue-flatpickr-component";
     import "flatpickr/dist/flatpickr.css";
     import {Portuguese as PortugueseLocale} from 'flatpickr/dist/l10n/pt.js';
-
-    const visitaEscola = ref({
-      id: props.visitaEscola.id,
-      nome: props.visitaEscola.nome,
-      createdAt: props.visitaEscola.createdAt
+    
+    const sermao = ref({
+      id: props.sermao.id,
+      nome: props.sermao.nome,
+      createdAt: props.sermao.createdAt
     })
   
     const loading = ref(false)
@@ -71,7 +71,7 @@
         type: Boolean,
         default: false
       },
-      visitaEscola: {
+      sermao: {
         required: true,
         type: Object,
       }
@@ -85,26 +85,26 @@
     })
   
     onUpdated(() => {
-      visitaEscola.value = {
-        id: props.visitaEscola.id,
-        nome: props.visitaEscola.nome,
-        createdAt: props.visitaEscola.createdAt
+      sermao.value = {
+        id: props.sermao.id,
+        nome: props.sermao.nome,
+        createdAt: props.sermao.createdAt
       }
     })
   
     function closeModal() {
       show.value = false
-      emit('close', visitaEscola.value)
+      emit('close', sermao.value)
     }
   
     function onSubmit() {
       loading.value = true
-      store.dispatch('updateVisitaEscola', visitaEscola.value)
+      store.dispatch('updateSermao', sermao.value)
         .then(response => {
           loading.value = false;
           if (response.status === 200) {
             Swal.fire({icon: 'success', title: 'Registro Atualizado com Sucesso!',showConfirmButton: false,timer: 1500})
-            store.dispatch('getVisitasEscolas')
+            store.dispatch('getSermoes')
             closeModal()
           }
         })

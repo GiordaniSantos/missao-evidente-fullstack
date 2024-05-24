@@ -294,6 +294,45 @@ export function updateEstudo({commit}, estudo) {
   return axiosClient.put(`/estudo/${id}`, estudo)
 }
 
+
+// ----------- Sermões --------
+export function getSermoes({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setSermao', [true])
+  url = url || '/sermao'
+  const params = {
+    per_page: state.sermoes.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setSermao', [false, response.data])
+    })
+    .catch(() => {
+      commit('setSermao', [false])
+    })
+}
+
+export function createSermao({commit}, sermao) {
+  return axiosClient.post('/sermao', sermao)
+}
+
+export function getSermao({commit}, id) {
+  return axiosClient.get(`/sermao/${id}`)
+}
+
+export function deleteSermao({commit}, id) {
+  return axiosClient.delete(`/sermao/${id}`)
+}
+
+export function updateSermao({commit}, sermao) {
+  const id = sermao.id
+  return axiosClient.put(`/sermao/${id}`, sermao)
+}
+
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMembresia', [true])

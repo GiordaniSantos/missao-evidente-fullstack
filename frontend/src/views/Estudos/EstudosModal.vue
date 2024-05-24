@@ -12,7 +12,7 @@
                 <Spinner v-if="loading" class="absolute left-0 top-0 bg-white right-0 bottom-0 flex items-center justify-center"/>
                 <header class="py-3 px-4 flex justify-between items-center">
                   <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                    {{`Atualizar visita ao crente: "${props.estudo.nome ? props.estudo.nome : 'Sem nome'}"`}}
+                    {{`Atualizar estudo: "${props.estudo.nome ? props.estudo.nome : 'Sem assunto'}"`}}
                   </DialogTitle>
                   <button @click="closeModal()" class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
@@ -22,7 +22,7 @@
                 </header>
                 <form @submit.prevent="onSubmit">
                   <div class="bg-white px-4 pt-5 pb-4">
-                    <CustomInput class="mb-2" v-model="estudo.nome" label="Nome do visitado"/>
+                    <CustomInput class="mb-2" v-model="estudo.nome" label="Assunto"/>
                     <flat-pickr v-model="estudo.createdAt" class="block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm rounded-md" 
                     :config="{
                       enableTime: true,
