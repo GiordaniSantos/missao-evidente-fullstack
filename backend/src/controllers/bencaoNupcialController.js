@@ -1,5 +1,5 @@
 const express = require('express');
-const { BatismoProfissao } = require('../models');
+const { BencaoNupcial } = require('../models');
 const { Op } = require('sequelize');
 const { pagination, paginationInfo } = require('../helpers/pagination');
 const { formatDate, isIso, checkIsDate } = require('../helpers/date')
@@ -40,20 +40,20 @@ router.get('/', async (req, res) =>{
             }*/
           ];
     }
-    const batismosProfissoes = await BatismoProfissao.findAll({
+    const bencoesNupciais = await BencaoNupcial.findAll({
         where: whereCondition,
         order: [[sortField, sortDirection]],
         limit: perPage,
         offset: offset
     });
 
-    const count = await BatismoProfissao.count({ where: whereCondition });
+    const count = await BencaoNupcial.count({ where: whereCondition });
 
-    const linksPagination = pagination('batismo-profissao', currentPage, count, perPage);
-    const links = paginationInfo('batismo-profissao', currentPage, count, perPage);
+    const linksPagination = pagination('bencao-nupcial', currentPage, count, perPage);
+    const links = paginationInfo('bencao-nupcial', currentPage, count, perPage);
     
     return res.json({
-        data: batismosProfissoes,
+        data: bencoesNupciais,
         links,
         meta: {
             current_page: currentPage,
@@ -61,7 +61,7 @@ router.get('/', async (req, res) =>{
             links: linksPagination,
             last_page: Math.ceil(count / perPage),
             per_page: perPage,
-            to: offset + batismosProfissoes.length,
+            to: offset + bencoesNupciais.length,
             total: count
         }
     });
@@ -71,17 +71,17 @@ router.get('/:id', async (req, res)=>{
     const { id } = req.params;
     const userId = req.query.userId;
 
-    const batismoProfissao  = await BatismoProfissao.findOne({where: {id:id, userId}});
-    if(!batismoProfissao) return res.jsonNotFound();
-    return res.json(batismoProfissao);
+    const bencaoNupcial  = await BencaoNupcial.findOne({where: {id:id, userId}});
+    if(!bencaoNupcial) return res.jsonNotFound();
+    return res.json(bencaoNupcial);
 });
 
 router.post('/', async(req, res) =>{
     const userId = req.query.userId;
 
     try {
-        const batismoProfissao = await BatismoProfissao.create({userId});
-        return res.jsonOK(batismoProfissao);
+        const bencaoNupcial = await BencaoNupcial.create({userId});
+        return res.jsonOK(bencaoNupcial);
     } catch (err) {
         let validateErrors = err.errors;
         if(validateErrors.length > 0) {
@@ -100,17 +100,17 @@ router.put('/:id', async (req, res) =>{
 
     const { body } = req;
 
-    const batismoProfissao  = await BatismoProfissao.findOne({where: {id:id, userId}});
-    if(!batismoProfissao) return res.jsonNotFound();
+    const bencaoNupcial  = await BencaoNupcial.findOne({where: {id:id, userId}});
+    if(!bencaoNupcial) return res.jsonNotFound();
     if(body['createdAt'] && !isIso(body['createdAt'])){
         if(!checkIsDate(body['createdAt'])) return res.status(422).json({ field: 'createdAt',message: 'valor inválido' })
-        batismoProfissao.changed('createdAt', true);
+        bencaoNupcial.changed('createdAt', true);
         const isoDate = formatDate(body['createdAt']);
-        batismoProfissao.set('createdAt', isoDate,{raw: true});
+        bencaoNupcial.set('createdAt', isoDate,{raw: true});
     }
-    batismoProfissao.set('nome', body['nome']);
+    bencaoNupcial.set('nome', body['nome']);
     
-    let validateErrors = await batismoProfissao.validate({fields: ['nome']}).catch(err => err.errors);
+    let validateErrors = await bencaoNupcial.validate({fields: ['nome']}).catch(err => err.errors);
 
     if(validateErrors.length > 0) {
         let field =  validateErrors[0].path
@@ -119,21 +119,21 @@ router.put('/:id', async (req, res) =>{
         return res.status(422).json({ field,message })
     }
 
-    await batismoProfissao.save({
+    await bencaoNupcial.save({
         silent: true,
         fields: ['nome','createdAt']
     });
 
-    return res.jsonOK(batismoProfissao);
+    return res.jsonOK(bencaoNupcial);
 });
 
 router.delete('/:id', async (req, res) =>{
     const { id } = req.params;
     const userId = req.query.userId;
 
-    const batismoProfissao  = await BatismoProfissao.findOne({where: {id:id, userId}});
-    if(!batismoProfissao) return res.jsonNotFound();
-    await batismoProfissao.destroy();
+    const bencaoNupcial  = await BencaoNupcial.findOne({where: {id:id, userId}});
+    if(!bencaoNupcial) return res.jsonNotFound();
+    await bencaoNupcial.destroy();
     return res.jsonOK();
 });
 
