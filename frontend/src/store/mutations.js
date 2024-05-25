@@ -251,6 +251,25 @@ export function setBencaoNupcial(state, [loading, data = null]) {
   state.bencoesNupciais.loading = loading;
 }
 
+
+export function setSantaCeia(state, [loading, data = null]) {
+
+  if (data) {
+    state.santasCeias = {
+      ...state.santasCeias,
+      data: data.data,
+      links: data.meta?.links,
+      page: data.meta.current_page,
+      totalPage: data.meta.last_page,
+      limit: data.meta.per_page,
+      from: data.meta.from,
+      to: data.meta.to,
+      total: data.meta.total,
+    }
+  }
+  state.santasCeias.loading = loading;
+}
+
 export function setMembresia(state, [loading, data = null]) {
 
   if (data) {

@@ -529,6 +529,45 @@ export function updateBencaoNupcial({commit}, bencaoNupcial) {
 }
 
 
+// ----------- Santas Ceias --------
+export function getSantasCeias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setSantaCeia', [true])
+  url = url || '/santa-ceia'
+  const params = {
+    per_page: state.santasCeias.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setSantaCeia', [false, response.data])
+    })
+    .catch(() => {
+      commit('setSantaCeia', [false])
+    })
+}
+
+export function createSantaCeia({commit}, santaCeia) {
+  return axiosClient.post('/santa-ceia', santaCeia)
+}
+
+export function getSantaCeia({commit}, id) {
+  return axiosClient.get(`/santa-ceia/${id}`)
+}
+
+export function deleteSantaCeia({commit}, id) {
+  return axiosClient.delete(`/santa-ceia/${id}`)
+}
+
+export function updateSantaCeia({commit}, santaCeia) {
+  const id = santaCeia.id
+  return axiosClient.put(`/santa-ceia/${id}`, santaCeia)
+}
+
+
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMembresia', [true])
