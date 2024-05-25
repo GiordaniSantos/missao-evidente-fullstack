@@ -456,7 +456,7 @@ export function getBatismosProfissoes({commit, state}, {url = null, search = '',
   commit('setBatismoProfissao', [true])
   url = url || '/batismo-profissao'
   const params = {
-    per_page: state.batismosInfantis.limit,
+    per_page: state.batismosProfissoes.limit,
   }
   return axiosClient.get(url, {
     params: {
@@ -488,6 +488,46 @@ export function updateBatismoProfissao({commit}, batismoProfissao) {
   const id = batismoProfissao.id
   return axiosClient.put(`/batismo-profissao/${id}`, batismoProfissao)
 }
+
+
+// ----------- Benções Nupciais --------
+export function getBencoesNupciais({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setBencaoNupcial', [true])
+  url = url || '/bencao-nupcial'
+  const params = {
+    per_page: state.bencoesNupciais.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setBencaoNupcial', [false, response.data])
+    })
+    .catch(() => {
+      commit('setBencaoNupcial', [false])
+    })
+}
+
+export function createBencaoNupcial({commit}, bencaoNupcial) {
+  return axiosClient.post('/bencao-nupcial', bencaoNupcial)
+}
+
+export function getBencaoNupcial({commit}, id) {
+  return axiosClient.get(`/bencao-nupcial/${id}`)
+}
+
+export function deleteBencaoNupcial({commit}, id) {
+  return axiosClient.delete(`/bencao-nupcial/${id}`)
+}
+
+export function updateBencaoNupcial({commit}, bencaoNupcial) {
+  const id = bencaoNupcial.id
+  return axiosClient.put(`/bencao-nupcial/${id}`, bencaoNupcial)
+}
+
 
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {

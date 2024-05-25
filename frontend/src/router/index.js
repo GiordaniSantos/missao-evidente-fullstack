@@ -16,6 +16,7 @@ import EstudosBiblicos from '../views/EstudosBiblicos/EstudosBiblicos.vue'
 import Discipulados from '../views/Discipulados/Discipulados.vue'
 import BatismosInfantis from '../views/BatismosInfantis/BatismosInfantis.vue'
 import BatismosProfissoes from '../views/BatismosProfissoes/BatismosProfissoes.vue'
+import BencoesNupciais from '../views/BencoesNupciais/BencoesNupciais.vue'
 import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
@@ -98,6 +99,11 @@ const routes = [
                 path: 'batismos-profissoes',
                 name: 'app.batismosProfissoes',
                 component: BatismosProfissoes
+            },
+            {
+                path: 'bencao-nupcial',
+                name: 'app.bencoesNupciais',
+                component: BencoesNupciais
             },
             {
                 path: 'membresias',
