@@ -3,29 +3,29 @@
       <div class="flex justify-between border-b-2 pb-3">
         <div class="flex items-center">
           <span class="whitespace-nowrap mr-3">Por Página</span>
-          <select @change="getBatismosInfantis(null)" v-model="perPage" class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+          <select @change="getBatismosProfissoes(null)" v-model="perPage" class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <span class="ml-3">Encontrado {{batismosInfantis.total}} Batismos Infantis</span>
+          <span class="ml-3">Encontrado {{batismosProfissoes.total}} Batismos e Profissões de Fé</span>
         </div>
         <div>
-          <input v-model="search" @change="getBatismosInfantis(null)" class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Procurar por nome">
+          <input v-model="search" @change="getBatismosProfissoes(null)" class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Procurar por nome">
         </div>
       </div>
       <table class="table-auto w-full">
         <thead>
           <tr>
-            <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosInfantis('id')">
+            <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosProfissoes('id')">
               ID
             </TableHeaderCell>
-            <TableHeaderCell field="createdAt" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosInfantis('createdAt')">
+            <TableHeaderCell field="createdAt" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosProfissoes('createdAt')">
               Data
             </TableHeaderCell>
-            <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosInfantis('nome')">
+            <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosProfissoes('nome')">
               Nome
             </TableHeaderCell>
             <TableHeaderCell field="actions">
@@ -33,26 +33,26 @@
             </TableHeaderCell>
           </tr>
         </thead>
-        <tbody v-if="batismosInfantis.loading || !batismosInfantis.data.length">
+        <tbody v-if="batismosProfissoes.loading || !batismosProfissoes.data.length">
           <tr>
             <td colspan="6">
-              <Spinner v-if="batismosInfantis.loading"/>
+              <Spinner v-if="batismosProfissoes.loading"/>
               <p v-else class="text-center py-8 text-gray-700">
-                Não há Batismos Infantis
+                Não há Batismos e Profissões de Fé
               </p>
             </td>
           </tr>
         </tbody>
         <tbody v-else>
-          <tr v-for="(batismoInfantil, index) of batismosInfantis.data">
+          <tr v-for="(batismoProfissao, index) of batismosProfissoes.data">
             <td class="border-b p-2 ">
-              {{ batismoInfantil.id }}
+              {{ batismoProfissao.id }}
             </td>
             <td class="border-b p-2 max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">
-              {{ formatDate(batismoInfantil.createdAt) }}
+              {{ formatDate(batismoProfissao.createdAt) }}
             </td>
             <td class="border-b p-2 max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">
-              {{ batismoInfantil.nome }}
+              {{ batismoProfissao.nome }}
             </td>
             <td class="border-b p-2 ">
               <Menu as="div" class="relative inline-block text-left">
@@ -65,13 +65,13 @@
                   <MenuItems class="absolute z-10 right-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div class="px-1 py-1">
                       <MenuItem v-slot="{ active }">
-                        <button :class="[ active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="editBatismoInfantil(batismoInfantil)">
+                        <button :class="[ active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="editBatismoProfissao(batismoProfissao)">
                           <PencilIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400" aria-hidden="true"/>
                           Editar
                         </button>
                       </MenuItem>
                       <MenuItem v-slot="{ active }">
-                        <button :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900','group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="deleteBatismoInfantil(batismoInfantil)">
+                        <button :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900','group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="deleteBatismoProfissao(batismoProfissao)">
                           <TrashIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400" aria-hidden="true"/>
                           Excluir
                         </button>
@@ -84,14 +84,14 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="!batismosInfantis.loading" class="flex justify-between items-center mt-5">
-        <div v-if="batismosInfantis.data.length">
-          Mostrando página {{ batismosInfantis.page }} de {{ batismosInfantis.totalPage }}
+      <div v-if="!batismosProfissoes.loading" class="flex justify-between items-center mt-5">
+        <div v-if="batismosProfissoes.data.length">
+          Mostrando página {{ batismosProfissoes.page }} de {{ batismosProfissoes.totalPage }}
         </div>
-        <nav v-if="batismosInfantis.total > batismosInfantis.limit" class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <nav v-if="batismosProfissoes.total > batismosProfissoes.limit" class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px" aria-label="Pagination">
           <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
           <a
-            v-for="(link, i) of batismosInfantis.links"
+            v-for="(link, i) of batismosProfissoes.links"
             :key="i"
             :disabled="!link.url"
             href="#"
@@ -103,7 +103,7 @@
                   ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
                   : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
                 i === 0 ? 'rounded-l-md' : '',
-                i === batismosInfantis.links.length - 1 ? 'rounded-r-md' : '',
+                i === batismosProfissoes.links.length - 1 ? 'rounded-r-md' : '',
                 !link.url ? ' bg-gray-100 text-gray-700': ''
               ]"
             v-html="link.label"
@@ -124,22 +124,22 @@
     import {PencilIcon, TrashIcon, PlusCircleIcon} from '@heroicons/vue/24/outline'
     import moment from "moment/dist/moment"
     import pt from "moment/dist/locale/pt-br"
-    //import batismoinfantilModal from "./batismoinfantilModal.vue";
+    //import batismoprofissaoModal from "./batismoprofissaoModal.vue";
     import Swal from 'sweetalert2'
   
     const perPage = ref(ITENS_PER_PAGE);
     const search = ref('');
-    const batismosInfantis = computed(() => store.state.batismosInfantis);
+    const batismosProfissoes = computed(() => store.state.batismosProfissoes);
     const sortField = ref('updatedAt');
     const sortDirection = ref('desc')
   
-    const batismoinfantil = ref({})
-    const showBatismoInfantilModal = ref(false);
+    const batismoprofissao = ref({})
+    const showBatismoProfissaoModal = ref(false);
   
     const emit = defineEmits(['clickEdit'])
   
     onMounted(() => {
-      getBatismosInfantis();
+      getBatismosProfissoes();
     })
   
     const formatDate = (date) => {
@@ -152,11 +152,11 @@
         return;
       }
   
-      getBatismosInfantis(link.url)
+      getBatismosProfissoes(link.url)
     }
   
-    function getBatismosInfantis(url = null) {
-      store.dispatch("getBatismosInfantis", {
+    function getBatismosProfissoes(url = null) {
+      store.dispatch("getBatismosProfissoes", {
         url,
         search: search.value,
         per_page: perPage.value,
@@ -165,7 +165,7 @@
       });
     }
   
-    function sortBatismosInfantis(field) {
+    function sortBatismosProfissoes(field) {
       if (field === sortField.value) {
         if (sortDirection.value === 'desc') {
           sortDirection.value = 'asc'
@@ -177,14 +177,14 @@
         sortDirection.value = 'asc'
       }
   
-      getBatismosInfantis()
+      getBatismosProfissoes()
     }
   
     function showAddNewModal() {
-      showBatismoInfantilModal.value = true
+      showBatismoProfissaoModal.value = true
     }
   
-    function deleteBatismoInfantil(batismoInfantil) {
+    function deleteBatismoProfissao(batismoProfissao) {
       Swal.fire({
         title: 'Tem certeza que deseja excluir este registro?',
         showConfirmButton: true,
@@ -194,10 +194,10 @@
         icon: 'warning'
       }).then((result) => {
           if (result.isConfirmed) {
-            store.dispatch('deleteBatismoInfantil', batismoInfantil.id)
+            store.dispatch('deleteBatismoProfissao', batismoProfissao.id)
             .then(res => {
               Swal.fire({icon: 'success', title: 'Registro Excluido com Sucesso!',showConfirmButton: false,timer: 1500})
-              store.dispatch('getBatismosInfantis')
+              store.dispatch('getBatismosProfissoes')
             })
           } else {
             Swal.fire('Cancelado', '', 'error')
@@ -205,8 +205,8 @@
       })
     }
   
-    function editBatismoInfantil(batismoInfantil) {
-      emit('clickEdit', batismoInfantil)
+    function editBatismoProfissao(batismoProfissao) {
+      emit('clickEdit', batismoProfissao)
     }
   </script>
   

@@ -412,7 +412,7 @@ export function updateDiscipulado({commit}, discipulado) {
 }
 
 
-// ----------- Discipulados --------
+// ----------- Batismos Infantis --------
 export function getBatismosInfantis({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setBatismoInfantil', [true])
   url = url || '/batismo-infantil'
@@ -448,6 +448,45 @@ export function deleteBatismoInfantil({commit}, id) {
 export function updateBatismoInfantil({commit}, batismoInfantil) {
   const id = batismoInfantil.id
   return axiosClient.put(`/batismo-infantil/${id}`, batismoInfantil)
+}
+
+
+// ----------- Batismos e Profissões de Fé --------
+export function getBatismosProfissoes({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setBatismoProfissao', [true])
+  url = url || '/batismo-profissao'
+  const params = {
+    per_page: state.batismosInfantis.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setBatismoProfissao', [false, response.data])
+    })
+    .catch(() => {
+      commit('setBatismoProfissao', [false])
+    })
+}
+
+export function createBatismoProfissao({commit}, batismoProfissao) {
+  return axiosClient.post('/batismo-profissao', batismoProfissao)
+}
+
+export function getBatismoProfissao({commit}, id) {
+  return axiosClient.get(`/batismo-profissao/${id}`)
+}
+
+export function deleteBatismoProfissao({commit}, id) {
+  return axiosClient.delete(`/batismo-profissao/${id}`)
+}
+
+export function updateBatismoProfissao({commit}, batismoProfissao) {
+  const id = batismoProfissao.id
+  return axiosClient.put(`/batismo-profissao/${id}`, batismoProfissao)
 }
 
 // ----------- Membresia --------
