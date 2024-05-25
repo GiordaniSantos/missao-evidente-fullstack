@@ -18,6 +18,7 @@ const discipuladoController = require('./controllers/discipuladoController');
 const batismoInfantil = require('./controllers/batismoInfantilController');
 const batismoProfissao = require('./controllers/batismoProfissaoController');
 const bencaoNupcial = require('./controllers/bencaoNupcialController');
+const santaCeia = require('./controllers/santaCeiaController');
 const membresiaController = require('./controllers/membresiaController');
 
 const app = express();
@@ -46,6 +47,7 @@ app.use('/api/discipulado', discipuladoController)
 app.use('/api/batismo-infantil', batismoInfantil)
 app.use('/api/batismo-profissao', batismoProfissao)
 app.use('/api/bencao-nupcial', bencaoNupcial)
+app.use('/api/santa-ceia', santaCeia)
 app.use('/api/membresia', membresiaController)
 
 app.get('/', (req, res)=>{
