@@ -412,6 +412,44 @@ export function updateDiscipulado({commit}, discipulado) {
 }
 
 
+// ----------- Discipulados --------
+export function getBatismosInfantis({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
+  commit('setBatismoInfantil', [true])
+  url = url || '/batismo-infantil'
+  const params = {
+    per_page: state.batismosInfantis.limit,
+  }
+  return axiosClient.get(url, {
+    params: {
+      ...params,
+      search, per_page, sort_field, sort_direction
+    }
+  })
+    .then((response) => {
+      commit('setBatismoInfantil', [false, response.data])
+    })
+    .catch(() => {
+      commit('setBatismoInfantil', [false])
+    })
+}
+
+export function createBatismoInfantil({commit}, batismoInfantil) {
+  return axiosClient.post('/batismo-infantil', batismoInfantil)
+}
+
+export function getBatismoInfantil({commit}, id) {
+  return axiosClient.get(`/batismo-infantil/${id}`)
+}
+
+export function deleteBatismoInfantil({commit}, id) {
+  return axiosClient.delete(`/batismo-infantil/${id}`)
+}
+
+export function updateBatismoInfantil({commit}, batismoInfantil) {
+  const id = batismoInfantil.id
+  return axiosClient.put(`/batismo-infantil/${id}`, batismoInfantil)
+}
+
 // ----------- Membresia --------
 export function getMembresias({commit, state}, {url = null, search = '', per_page, sort_field, sort_direction} = {}) {
   commit('setMembresia', [true])

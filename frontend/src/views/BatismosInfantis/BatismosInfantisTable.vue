@@ -3,56 +3,56 @@
       <div class="flex justify-between border-b-2 pb-3">
         <div class="flex items-center">
           <span class="whitespace-nowrap mr-3">Por Página</span>
-          <select @change="getEstudosBiblicos(null)" v-model="perPage" class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+          <select @change="getBatismosInfantis(null)" v-model="perPage" class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          <span class="ml-3">Encontrado {{estudosBiblicos.total}} Estudos Biblicos</span>
+          <span class="ml-3">Encontrado {{batismosInfantis.total}} Batismos Infantis</span>
         </div>
         <div>
-          <input v-model="search" @change="getEstudosBiblicos(null)" class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Procurar por assunto">
+          <input v-model="search" @change="getBatismosInfantis(null)" class="appearance-none relative block w-48 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Procurar por assunto">
         </div>
       </div>
       <table class="table-auto w-full">
         <thead>
           <tr>
-            <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection" @click="sortEstudosBiblicos('id')">
+            <TableHeaderCell field="id" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosInfantis('id')">
               ID
             </TableHeaderCell>
-            <TableHeaderCell field="createdAt" :sort-field="sortField" :sort-direction="sortDirection" @click="sortEstudosBiblicos('createdAt')">
+            <TableHeaderCell field="createdAt" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosInfantis('createdAt')">
               Data
             </TableHeaderCell>
-            <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection" @click="sortEstudosBiblicos('nome')">
-              Assunto
+            <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection" @click="sortBatismosInfantis('nome')">
+              Nome
             </TableHeaderCell>
             <TableHeaderCell field="actions">
               Ações
             </TableHeaderCell>
           </tr>
         </thead>
-        <tbody v-if="estudosBiblicos.loading || !estudosBiblicos.data.length">
+        <tbody v-if="batismosInfantis.loading || !batismosInfantis.data.length">
           <tr>
             <td colspan="6">
-              <Spinner v-if="estudosBiblicos.loading"/>
+              <Spinner v-if="batismosInfantis.loading"/>
               <p v-else class="text-center py-8 text-gray-700">
-                Não há Estudos Biblicos
+                Não há Batismos Infantis
               </p>
             </td>
           </tr>
         </tbody>
         <tbody v-else>
-          <tr v-for="(estudoBiblico, index) of estudosBiblicos.data">
+          <tr v-for="(batismoInfantil, index) of batismosInfantis.data">
             <td class="border-b p-2 ">
-              {{ estudoBiblico.id }}
+              {{ batismoInfantil.id }}
             </td>
             <td class="border-b p-2 max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">
-              {{ formatDate(estudoBiblico.createdAt) }}
+              {{ formatDate(batismoInfantil.createdAt) }}
             </td>
             <td class="border-b p-2 max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis">
-              {{ estudoBiblico.nome }}
+              {{ batismoInfantil.nome }}
             </td>
             <td class="border-b p-2 ">
               <Menu as="div" class="relative inline-block text-left">
@@ -65,13 +65,13 @@
                   <MenuItems class="absolute z-10 right-0 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div class="px-1 py-1">
                       <MenuItem v-slot="{ active }">
-                        <button :class="[ active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="editEstudoBiblico(estudoBiblico)">
+                        <button :class="[ active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="editBatismoInfantil(batismoInfantil)">
                           <PencilIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400" aria-hidden="true"/>
                           Editar
                         </button>
                       </MenuItem>
                       <MenuItem v-slot="{ active }">
-                        <button :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900','group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="deleteEstudoBiblico(estudoBiblico)">
+                        <button :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900','group flex w-full items-center rounded-md px-2 py-2 text-sm',]" @click="deleteBatismoInfantil(batismoInfantil)">
                           <TrashIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400" aria-hidden="true"/>
                           Excluir
                         </button>
@@ -84,14 +84,14 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="!estudosBiblicos.loading" class="flex justify-between items-center mt-5">
-        <div v-if="estudosBiblicos.data.length">
-          Mostrando página {{ estudosBiblicos.page }} de {{ estudosBiblicos.totalPage }}
+      <div v-if="!batismosInfantis.loading" class="flex justify-between items-center mt-5">
+        <div v-if="batismosInfantis.data.length">
+          Mostrando página {{ batismosInfantis.page }} de {{ batismosInfantis.totalPage }}
         </div>
-        <nav v-if="estudosBiblicos.total > estudosBiblicos.limit" class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <nav v-if="batismosInfantis.total > batismosInfantis.limit" class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px" aria-label="Pagination">
           <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
           <a
-            v-for="(link, i) of estudosBiblicos.links"
+            v-for="(link, i) of batismosInfantis.links"
             :key="i"
             :disabled="!link.url"
             href="#"
@@ -103,7 +103,7 @@
                   ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
                   : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
                 i === 0 ? 'rounded-l-md' : '',
-                i === estudosBiblicos.links.length - 1 ? 'rounded-r-md' : '',
+                i === batismosInfantis.links.length - 1 ? 'rounded-r-md' : '',
                 !link.url ? ' bg-gray-100 text-gray-700': ''
               ]"
             v-html="link.label"
@@ -124,22 +124,22 @@
     import {PencilIcon, TrashIcon, PlusCircleIcon} from '@heroicons/vue/24/outline'
     import moment from "moment/dist/moment"
     import pt from "moment/dist/locale/pt-br"
-    //import estudobiblicoModal from "./estudobiblicoModal.vue";
+    //import batismoinfantilModal from "./batismoinfantilModal.vue";
     import Swal from 'sweetalert2'
   
     const perPage = ref(ITENS_PER_PAGE);
     const search = ref('');
-    const estudosBiblicos = computed(() => store.state.estudosBiblicos);
+    const batismosInfantis = computed(() => store.state.batismosInfantis);
     const sortField = ref('updatedAt');
     const sortDirection = ref('desc')
   
-    const estudobiblico = ref({})
-    const showEstudoBiblicoModal = ref(false);
+    const batismoinfantil = ref({})
+    const showBatismoInfantilModal = ref(false);
   
     const emit = defineEmits(['clickEdit'])
   
     onMounted(() => {
-      getEstudosBiblicos();
+      getBatismosInfantis();
     })
   
     const formatDate = (date) => {
@@ -152,11 +152,11 @@
         return;
       }
   
-      getEstudosBiblicos(link.url)
+      getBatismosInfantis(link.url)
     }
   
-    function getEstudosBiblicos(url = null) {
-      store.dispatch("getEstudosBiblicos", {
+    function getBatismosInfantis(url = null) {
+      store.dispatch("getBatismosInfantis", {
         url,
         search: search.value,
         per_page: perPage.value,
@@ -165,7 +165,7 @@
       });
     }
   
-    function sortEstudosBiblicos(field) {
+    function sortBatismosInfantis(field) {
       if (field === sortField.value) {
         if (sortDirection.value === 'desc') {
           sortDirection.value = 'asc'
@@ -177,14 +177,14 @@
         sortDirection.value = 'asc'
       }
   
-      getEstudosBiblicos()
+      getBatismosInfantis()
     }
   
     function showAddNewModal() {
-      showEstudoBiblicoModal.value = true
+      showBatismoInfantilModal.value = true
     }
   
-    function deleteEstudoBiblico(estudoBiblico) {
+    function deleteBatismoInfantil(batismoInfantil) {
       Swal.fire({
         title: 'Tem certeza que deseja excluir este registro?',
         showConfirmButton: true,
@@ -194,10 +194,10 @@
         icon: 'warning'
       }).then((result) => {
           if (result.isConfirmed) {
-            store.dispatch('deleteEstudoBiblico', estudoBiblico.id)
+            store.dispatch('deleteBatismoInfantil', batismoInfantil.id)
             .then(res => {
               Swal.fire({icon: 'success', title: 'Registro Excluido com Sucesso!',showConfirmButton: false,timer: 1500})
-              store.dispatch('getEstudosBiblicos')
+              store.dispatch('getBatismosInfantis')
             })
           } else {
             Swal.fire('Cancelado', '', 'error')
@@ -205,8 +205,8 @@
       })
     }
   
-    function editEstudoBiblico(estudoBiblico) {
-      emit('clickEdit', estudoBiblico)
+    function editBatismoInfantil(batismoInfantil) {
+      emit('clickEdit', batismoInfantil)
     }
   </script>
   

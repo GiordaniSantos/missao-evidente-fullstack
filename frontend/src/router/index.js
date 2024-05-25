@@ -14,6 +14,7 @@ import Estudos from '../views/Estudos/Estudos.vue'
 import Sermoes from '../views/Sermoes/Sermoes.vue'
 import EstudosBiblicos from '../views/EstudosBiblicos/EstudosBiblicos.vue'
 import Discipulados from '../views/Discipulados/Discipulados.vue'
+import BatismosInfantis from '../views/BatismosInfantis/BatismosInfantis.vue'
 import Membresias from "../views/Membresias/Membresias.vue"
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
@@ -86,6 +87,11 @@ const routes = [
                 path: 'discipulados',
                 name: 'app.discipulados',
                 component: Discipulados
+            },
+            {
+                path: 'batismos-infantis',
+                name: 'app.batismosInfantis',
+                component: BatismosInfantis
             },
             {
                 path: 'membresias',

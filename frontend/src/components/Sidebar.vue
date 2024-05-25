@@ -103,7 +103,7 @@
         <MenuItems class="right-0 w-full mt-2 mb-2 w-36 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div class="px-1 py-1">
             <MenuItem v-slot="{ active }">
-              <router-link to="{name: 'app.crentes'}" 
+              <router-link :to="{name: 'app.batismosInfantis'}" 
                 active-class="text-white bg-indigo-600"
                 exact-active-class="text-white bg-indigo-600"
                 :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'group flex w-full items-center rounded-md px-2 py-2 text-sm',]">

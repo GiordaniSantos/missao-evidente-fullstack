@@ -23,7 +23,7 @@
               ID
             </TableHeaderCell>
             <TableHeaderCell field="createdAt" :sort-field="sortField" :sort-direction="sortDirection" @click="sortEstudos('createdAt')">
-              Data da Visita
+              Data
             </TableHeaderCell>
             <TableHeaderCell field="nome" :sort-field="sortField" :sort-direction="sortDirection" @click="sortEstudos('nome')">
               Assunto
