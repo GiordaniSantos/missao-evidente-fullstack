@@ -17,6 +17,15 @@ export function login({commit}, data) {
     })
 }
 
+export function registrar({commit}, data) {
+  return axiosClient.post('/auth/cadastrar', data)
+    .then(({data}) => {
+      commit('setUser', data.data);
+      commit('setToken', data.metadata.token)
+      return data;
+    })
+}
+
 export function logout({commit}) {
  
       commit('setToken', null)

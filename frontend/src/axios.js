@@ -1,6 +1,3 @@
-/**
- * Created by Zura on 12/25/2021.
- */
 import axios from "axios";
 import store from "./store";
 import router from "./router/index.js";
@@ -11,7 +8,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(config => {
   config.headers.Authorization = `Bearer_${store.state.user.token}`
-  if(config.url != "/auth/login"){
+  if(config.url != "/auth/login" && config.url != "/auth/cadastrar"){
     config.params = config.params || {};
     config.params.userId = store.state.user.data.id;
   }
