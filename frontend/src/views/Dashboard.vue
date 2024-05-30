@@ -1,185 +1,406 @@
 <template>
-    <div class="mb-2 flex items-center justify-between">
-      <h1 class="text-3xl font-semibold">Dashboard</h1>
-      <div class="flex items-center">
-        <label class="mr-2">Alterar Período</label>
-        <CustomInput type="select" v-model="chosenDate" @change="onDatePickerChange" :select-options="dateOptions"/>
-      </div>
+  <div class="mb-2 flex items-center justify-between">
+    <h1 class="text-3xl font-semibold">Início</h1>
+    <div class="flex items-center">
+      <label class="mr-2">Filtrar</label>
+      <CustomInput type="select" v-model="chosenMes" @change="onDatePickerChange" :select-options="mesOptions"/>
+      <input type="number" v-model="chosenAno" @change="onDatePickerChange" class="block mt-1 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm rounded-md" placeholder="Ano">
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
-      <!--    Active Customers-->
-      <div class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center">
-        <label class="text-lg font-semibold block mb-2">Clientes Ativos</label>
-        <template v-if="!loading.customersCount">
-          <span class="text-3xl font-semibold">{{ customersCount }}</span>
-        </template>
-        <Spinner v-else text="" class=""/>
-      </div>
-      <!--/    Active Customers-->
-      <!--    Active Products -->
-      <div class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
-           style="animation-delay: 0.1s">
-        <label class="text-lg font-semibold block mb-2">Produtos Ativos</label>
-        <template v-if="!loading.productsCount">
-          <span class="text-3xl font-semibold">{{ productsCount }}</span>
-        </template>
-        <Spinner v-else text="" class=""/>
-      </div>
-      <!--/    Active Products -->
-      <!--    Paid Orders -->
-      <div class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
-           style="animation-delay: 0.2s">
-        <label class="text-lg font-semibold block mb-2">Pedidos Pagos</label>
-        <template v-if="!loading.paidOrders">
-          <span class="text-3xl font-semibold">{{ paidOrders }}</span>
-        </template>
-        <Spinner v-else text="" class=""/>
-      </div>
-      <!--/    Paid Orders -->
-      <!--    Total Income -->
-      <div class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center"
-           style="animation-delay: 0.3s">
-        <label class="text-lg font-semibold block mb-2">Renda Total</label>
-        <template v-if="!loading.totalIncome">
-          <span class="text-3xl font-semibold">{{ totalIncome }}</span>
-        </template>
-        <Spinner v-else text="" class=""/>
-      </div>
-      <!--/    Total Income -->
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
+    <div class="animate-fade-in-down border-l-4 py-7 border-yellow-400 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.3s">
+      <template v-if="!loading.visitasCrentesCount">
+        <div class=" pl-2">
+          <span class="text-yellow-400 font-medium">CRENTES</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ visitasCrentesCount }} visitas</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faCross" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
     </div>
+    <div class="animate-fade-in-down border-l-4 py-7 border-yellow-400 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.1s">
+      <template v-if="!loading.visitasIncredulosCount">
+        <div class=" pl-2">
+          <span class="text-yellow-400 font-medium">NÃO CRENTES</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ visitasIncredulosCount }} visitas</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faHeartBroken" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+    <div class="animate-fade-in-down border-l-4 py-7 border-yellow-400 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
+      <template v-if="!loading.visitasPresidiosCount">
+        <div class=" pl-2">
+          <span class="text-yellow-400 font-medium">PRESÍDIOS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ visitasPresidiosCount }} visitas</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faUserLock" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
+    <div class="animate-fade-in-down border-l-4 py-7 border-yellow-400 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.3s">
+      <template v-if="!loading.visitasEnfermosCount">
+        <div class=" pl-2">
+          <span class="text-yellow-400 font-medium">ENFERMOS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ visitasEnfermosCount }} visitas</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faSyringe" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+    <div class="animate-fade-in-down border-l-4 py-7 border-yellow-400 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.1s">
+      <template v-if="!loading.visitasHospitaisCount">
+        <div class=" pl-2">
+          <span class="text-yellow-400 font-medium">HOSPITAIS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ visitasHospitaisCount }} visitas</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faHospital" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+    <div class="animate-fade-in-down border-l-4 py-7 border-yellow-400 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
+      <template v-if="!loading.visitasEscolasCount">
+        <div class=" pl-2">
+          <span class="text-yellow-400 font-medium">ESCOLAS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ visitasEscolasCount }} visitas</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faSchool" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-4"> 
+    <div class="animate-fade-in-down border-l-4 py-7 border-blue-600 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
+      <template v-if="!loading.estudosCount">
+        <div class=" pl-2">
+          <span class="text-blue-600 font-medium">ESTUDOS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ estudosCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faBook" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div> 
+    <div class="animate-fade-in-down border-l-4 py-7 border-blue-600 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.3s">
+      <template v-if="!loading.sermoesCount">
+        <div class=" pl-2">
+          <span class="text-blue-600 font-medium">SERMÕES</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ sermoesCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faUserTie" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div> 
+    <div class="animate-fade-in-down border-l-4 py-7 border-blue-600 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.1s">
+      <template v-if="!loading.estudosBiblicosCount">
+        <div class=" pl-2">
+          <span class="text-blue-600 font-medium">ESTUDOS BIBLÍCOS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ estudosBiblicosCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faBible" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div> 
+    <div class="animate-fade-in-down border-l-4 py-7 border-blue-600 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
+      <template v-if="!loading.discipuladosCount">
+        <div class=" pl-2">
+          <span class="text-blue-600 font-medium">DISCIPULADOS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ discipuladosCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faPeopleArrows" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div> 
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mb-4">
+    <div class="animate-fade-in-down border-l-4 py-7 border-red-900 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
+      <template v-if="!loading.batismosInfantisCount">
+        <div class=" pl-2">
+          <span class="text-red-900 font-medium">BATISMOS INFANTIS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ batismosInfantisCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faChild" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div> 
+    <div class="animate-fade-in-down border-l-4 py-7 border-red-900 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.3s">
+      <template v-if="!loading.batismosProfissoesCount">
+        <div class=" pl-2">
+          <span class="text-red-900 font-medium">BATISMOS/PROF. FÉ</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ batismosProfissoesCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faPrayingHands" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+    <div class="animate-fade-in-down border-l-4 py-7 border-red-900 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.1s">
+      <template v-if="!loading.bencoesNupciaisCount">
+        <div class=" pl-2">
+          <span class="text-red-900 font-medium">BENÇÕES NUPCIAIS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ bencoesNupciaisCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faHandHoldingHeart" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+    <div class="animate-fade-in-down border-l-4 py-7 border-red-900 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
+      <template v-if="!loading.santasCeiasCount">
+        <div class=" pl-2">
+          <span class="text-red-900 font-medium">SANTAS CEIAS</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ santasCeiasCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faWineGlassAlt" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+    <div class="animate-fade-in-down border-l-4 py-7 border-teal-700 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
+      <template v-if="!loading.batismosInfantisCount">
+        <div class=" pl-2">
+          <span class="text-teal-700 font-medium">COMUNGANTES</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ batismosInfantisCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faUsers" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div> 
+    <div class="animate-fade-in-down border-l-4 py-7 border-teal-700 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.3s">
+      <template v-if="!loading.batismosInfantisCount">
+        <div class=" pl-2">
+          <span class="text-teal-700 font-medium">NÃO COMUNGANTES</span>
+          <h2 class="text-gray-800 font-bold text-lg">{{ batismosInfantisCount }}</h2>
+        </div>
+        <button class="bg-gray-200 rounded-full p-2">
+          <FontAwesomeIcon :icon="faUsers" class="h-6 w-6 text-gray-500" />
+        </button>
+      </template>
+      <Spinner v-else text="" class=""/>
+    </div>
+  </div>
   
-    <div class="grid grid-rows-1 md:grid-rows-2 md:grid-flow-col grid-cols-1 md:grid-cols-3 gap-3">
-      <div class="col-span-1 md:col-span-2 row-span-1 md:row-span-2 bg-white py-6 px-5 rounded-lg shadow">
-        <label class="text-lg font-semibold block mb-2">Últimos Pedidos</label>
-        <template v-if="!loading.latestOrders">
-          <div v-for="o of latestOrders" :key="o.id" class="py-2 px-3 hover:bg-gray-50">
-            <p>
-              <router-link :to="{name: 'app.orders.view', params: {id: o.id}}" class="text-indigo-700 font-semibold">
-                Pedido #{{ o.id }}
-              </router-link>
-              Criado {{ o.created_at }}. {{ o.items }} item(s)
-            </p>
-            <p class="flex justify-between">
-              <span>{{ o.first_name }} {{ o.last_name }}</span>
-              <span>{{ Intl.NumberFormat('pt-br', {style: 'currency', currency: 'BRL'}).format(o.total_price) }}</span>
-            </p>
+    <div class="grid grid-rows-1 md:grid-rows-2 md:grid-flow-col grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div class="col-span-1 md:col-span-2 row-span-1 lg:row-span-2 bg-white py-6 px-5 rounded-lg shadow">
+        <label class="text-lg font-semibold block mb-2">Frequência aos Domingos</label>
+        <template v-if="!loading.frequenciaChart">
+          <LineChart :width="400" :height="200" :data="frequenciaChart"/>
+        </template>
+        <Spinner v-else text="" class=""/>
+      </div>
+      <div class="bg-white py-6 px-5 rounded-lg shadow">
+        <label class="text-lg font-semibold block mb-2">Frequência aos Domingos</label>
+        <template v-if="!loading.membresias">
+          <div v-for="membresia of membresias" :key="membresia.id" class="mb-3 flex">
+            <div class="w-12 h-12 bg-gray-200 flex items-center justify-center rounded-full mr-2">
+              <UsersIcon class="w-5"/>
+            </div>
+            <div>
+              <h3>{{ membresia.nome }}: {{ membresia.quantidade }} pessoas</h3>
+              <p>(Registro criado em {{ formatDate(membresia.createdAt) }})</p>
+            </div>
           </div>
         </template>
         <Spinner v-else text="" class=""/>
       </div>
       <div class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center">
-        <label class="text-lg font-semibold block mb-2">Pedidos por País</label>
-        <template v-if="!loading.ordersByCountry">
-          <DoughnutChart :width="140" :height="200" :data="ordersByCountry"/>
-        </template>
-        <Spinner v-else text="" class=""/>
-      </div>
-      <div class="bg-white py-6 px-5 rounded-lg shadow">
-        <label class="text-lg font-semibold block mb-2">Últimos clientes</label>
-        <template v-if="!loading.latestCustomers">
-          <router-link :to="{name: 'app.customers.view', params: {id: c.id}}" v-for="c of latestCustomers" :key="c.id"
-                       class="mb-3 flex">
-            <div class="w-12 h-12 bg-gray-200 flex items-center justify-center rounded-full mr-2">
-              <UserIcon class="w-5"/>
-            </div>
-            <div>
-              <h3>{{ c.first_name }} {{ c.last_name }}</h3>
-              <p>{{ c.email }}</p>
-            </div>
-          </router-link>
+        <label class="text-lg font-semibold block mb-2">Visitação</label>
+        <template v-if="!loading.visitacaoChart">
+          <DoughnutChart :width="400" :height="200" :data="visitacaoChart"/>
         </template>
         <Spinner v-else text="" class=""/>
       </div>
     </div>
   
-  </template>
+</template>
   
-  <script setup>
-  import {UserIcon} from '@heroicons/vue/24/outline'
+<script setup>
+  import {UsersIcon} from '@heroicons/vue/24/outline'
   import DoughnutChart from '../components/core/Charts/Doughnut.vue'
+  import LineChart from '../components/core/Charts/Line.vue'
   import axiosClient from "../axios.js";
-  import {computed, onMounted, ref} from "vue";
+  import {computed, onMounted, reactive, ref} from "vue";
   import Spinner from "../components/core/Spinner.vue";
   import CustomInput from "../components/core/CustomInput.vue";
+  import moment from "moment/dist/moment"
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  import { faHouse, faCalendarDays, faBook, faUserTie, faBookBible, faPeopleArrows,
+   faChildReaching, faPrayingHands, faHandHoldingHeart, faWineGlassAlt, faCross, faHeartBroken,
+   faUserLock, faSyringe, faHospital, faSchool, faChevronRight, faBible, faChild, faUsers} from '@fortawesome/free-solid-svg-icons'
+  import pt from "moment/dist/locale/pt-br"
   import {useStore} from "vuex";
   
   const store = useStore();
-  const dateOptions = computed(() => store.state.dateOptions);
-  const chosenDate = ref('all')
+  const currentUser = computed(() => store.state.user.data);
+  const chosenMes = ref(new Date().getMonth() + 1)
+  const chosenAno = ref(new Date().getFullYear())
+
+  const mesOptions = [
+    {key: '1', text: 'Janeiro'},
+    {key: '2', text: 'Fevereiro'},
+    {key: '3', text: 'Março'},
+    {key: '4', text: 'Abril'},
+    {key: '5', text: 'Maio'},
+    {key: '6', text: 'Junho'},
+    {key: '7', text: 'Julho'},
+    {key: '8', text: 'Agosto'},
+    {key: '9', text: 'Setembro'},
+    {key: '10', text: 'Outubro'},
+    {key: '11', text: 'Novembro'},
+    {key: '12', text: 'Dezembro'},
+  ]
+
+  const formatDate = (date) => {
+    return moment(date).format('DD/MM/YYYY');
+  }
   
   const loading = ref({
-    customersCount: true,
-    productsCount: true,
-    paidOrders: true,
+    visitasCrentesCount: true,
+    visitasIncredulosCount: true,
+    visitasPresidiosCount: true,
+    visitasEnfermosCount: true,
+    visitasHospitaisCount: true,
+    visitasEscolasCount: true,
+    estudosCount: true,
+    sermoesCount: true,
+    estudosBiblicosCount: true,
+    discipuladosCount: true,
+    batismosInfantisCount: true,
+    batismosProfissoesCount: true,
+    bencoesNupciaisCount: true,
+    santasCeiasCount: true,
     totalIncome: true,
     ordersByCountry: true,
-    latestCustomers: true,
+    visitacaoChart: true,
+    frequenciaChart: true,
+    membresias: true,
     latestOrders: true
   })
-  const customersCount = ref(0);
-  const productsCount = ref(0);
-  const paidOrders = ref(0);
-  const totalIncome = ref(0);
-  const ordersByCountry = ref([]);
-  const latestCustomers = ref([]);
-  const latestOrders = ref([]);
+  const visitasCrentesCount = ref(0);
+  const visitasIncredulosCount = ref(0);
+  const visitasPresidiosCount = ref(0);
+  const visitasEnfermosCount = ref(0);
+  const visitasHospitaisCount = ref(0);
+  const visitasEscolasCount = ref(0);
+  const estudosCount = ref(0);
+  const sermoesCount = ref(0);
+  const estudosBiblicosCount = ref(0);
+  const discipuladosCount = ref(0);
+  const batismosInfantisCount = ref(0);
+  const batismosProfissoesCount = ref(0);
+  const bencoesNupciaisCount = ref(0);
+  const santasCeiasCount = ref(0);
+  const visitacaoChart = ref([]);
+  const frequenciaChart = ref([]);
+  const membresias = ref([]);
   
   function updateDashboard() {
-    const d = chosenDate.value
-    loading.value = {
-      customersCount: true,
-      productsCount: true,
-      paidOrders: true,
-      totalIncome: true,
-      ordersByCountry: true,
-      latestCustomers: true,
-      latestOrders: true
-    }
-    axiosClient.get(`/dashboard/customers-count`, {params: {d}}).then(({data}) => {
-      customersCount.value = data
-      loading.value.customersCount = false;
-    })
-    axiosClient.get(`/dashboard/products-count`, {params: {d}}).then(({data}) => {
-      productsCount.value = data;
-      loading.value.productsCount = false;
-    })
-    axiosClient.get(`/dashboard/orders-count`, {params: {d}}).then(({data}) => {
-      paidOrders.value = data;
-      loading.value.paidOrders = false;
-    })
-    axiosClient.get(`/dashboard/income-amount`, {params: {d}}).then(({data}) => {
-      totalIncome.value = new Intl.NumberFormat('pt-br', {
-        style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 0
-      })
-        .format(data); 
-      loading.value.totalIncome = false;
-    })
-    axiosClient.get(`/dashboard/orders-by-country`, {params: {d}}).then(({data: countries}) => {
-      loading.value.ordersByCountry = false;
+  
+    axiosClient.get(`/dashboard`, {params: {userId: currentUser.id, mes: chosenMes.value, ano: chosenAno.value}}).then(({data}) => {
+      visitasCrentesCount.value = data.crentes
+      loading.value.visitasCrentesCount = false;
+      visitasIncredulosCount.value = data.incredulos
+      loading.value.visitasIncredulosCount = false;
+      visitasPresidiosCount.value = data.presidios
+      loading.value.visitasPresidiosCount = false;
+      visitasEnfermosCount.value = data.enfermos
+      loading.value.visitasEnfermosCount = false;
+      visitasHospitaisCount.value = data.hospitais
+      loading.value.visitasHospitaisCount = false;
+      visitasEscolasCount.value = data.escolas
+      loading.value.visitasEscolasCount = false;
+      estudosCount.value = data.estudo
+      loading.value.estudosCount = false;
+      sermoesCount.value = data.sermao
+      loading.value.sermoesCount = false;
+      estudosBiblicosCount.value = data.estudoBiblico
+      loading.value.estudosBiblicosCount = false;
+      discipuladosCount.value = data.discipulado
+      loading.value.discipuladosCount = false;
+      batismosInfantisCount.value = data.batismoInfantil
+      loading.value.batismosInfantisCount = false;
+      batismosProfissoesCount.value = data.batismoProfissao
+      loading.value.batismosProfissoesCount = false;
+      bencoesNupciaisCount.value = data.bencaoNupcial
+      loading.value.bencoesNupciaisCount = false;
+      santasCeiasCount.value = data.santaCeia
+      loading.value.santasCeiasCount = false;
+      membresias.value = data.membresias
+      loading.value.membresias = false;
+
       const chartData = {
-        labels: [],
-        datasets: [{
-          backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+      labels: [],
+      datasets: [{
+          label: 'Pessoas',
+          backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#4e73df', '#f6c23e'],
           data: []
         }]
       }
-      countries.forEach(c => {
-        chartData.labels.push(c.name);
-        chartData.datasets[0].data.push(c.count);
+    
+      membresias.value.forEach(m => {
+        chartData.labels.push(m.nome);
+        chartData.datasets[0].data.push(m.quantidade);
       })
-      ordersByCountry.value = chartData
+      
+      frequenciaChart.value = chartData
+      loading.value.frequenciaChart = false;
     })
   
-    axiosClient.get(`/dashboard/latest-customers`, {params: {d}}).then(({data: customers}) => {
-      latestCustomers.value = customers;
-      loading.value.latestCustomers = false;
-    })
-    axiosClient.get(`/dashboard/latest-orders`, {params: {d}}).then(({data: orders}) => {
-      latestOrders.value = orders.data;
-      loading.value.latestOrders = false;
-    })
+    
+    const chartDataVisitacao = {
+      labels: [],
+        datasets: [{
+          backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#4e73df', '#f6c23e'],
+          data: []
+        }
+      ]
+    }
+
+    chartDataVisitacao.labels.push('Crentes');
+    chartDataVisitacao.datasets[0].data.push(visitasCrentesCount);
+    chartDataVisitacao.labels.push('Não Crentes');
+    chartDataVisitacao.datasets[0].data.push(visitasIncredulosCount);
+    chartDataVisitacao.labels.push('Presídios');
+    chartDataVisitacao.datasets[0].data.push(visitasPresidiosCount);
+    chartDataVisitacao.labels.push('Enfermos');
+    chartDataVisitacao.datasets[0].data.push(visitasEnfermosCount);
+    chartDataVisitacao.labels.push('Hospitais');
+    chartDataVisitacao.datasets[0].data.push(visitasHospitaisCount);
+    chartDataVisitacao.labels.push('Escolas');
+    chartDataVisitacao.datasets[0].data.push(visitasEscolasCount);
+
+    visitacaoChart.value = chartDataVisitacao;
+    loading.value.visitacaoChart = false;
   }
   
   function onDatePickerChange() {
@@ -187,8 +408,8 @@
   }
   
   onMounted(() => updateDashboard())
-  </script>
-  
-  <style scoped>
-  
-  </style>
+</script>
+
+<style scoped>
+
+</style>

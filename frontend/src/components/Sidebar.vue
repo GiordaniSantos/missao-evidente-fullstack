@@ -9,7 +9,7 @@
         <FontAwesomeIcon :icon="faHouse" class="w-5" />
       </span>
       <span class="text-xs">
-        Dashboard
+        Início
       </span>
     </router-link>
     <router-link 
