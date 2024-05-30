@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) =>{
     try {
-        const userId = req.query.id_usuario;
+        const userId = req.query.userId;
         const mes = req.query.mes || new Date().getMonth() + 1;
         const ano = req.query.ano || new Date().getFullYear();
 
