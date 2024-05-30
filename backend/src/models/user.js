@@ -9,14 +9,27 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: true,
+            validate: {
+                len: { args: [0, 255], msg: 'O campo nome deve ter no máximo 255 caracteres'}
+            }
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                isEmail: {
+                    args: true,
+                    msg: 'Por favor, insira um endereço de email válido.'
+                },
+                len: { args: [0, 255], msg: 'O campo nome deve ter no máximo 255 caracteres'}
+            }
         },
         password: {
             type: DataTypes.STRING(1234),
             allowNull: false,
+            validate: {
+                len: { args: [8, Infinity], msg: 'O campo senha deve ter no minimo 8 caracteres'}
+            }
         },
         jwtVersion: {
             type: DataTypes.INTEGER,

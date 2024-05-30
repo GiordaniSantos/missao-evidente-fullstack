@@ -27,6 +27,17 @@ router.post('/cadastrar', async (req, res) => {
 
     const { name, email, password } = req.body;
 
+    const user = new User({ name, email, password });
+
+    try {
+        await user.validate();
+    } catch (err) {
+        const errors = err.errors;
+        const field = errors[0].path;
+        const message = errors[0].message;
+        return res.status(422).json({ field, message });
+    }
+
     const account = await User.findOne({ where: { email }});
     if ( account ) return res.jsonBadRequest(null, getMessage('user.signup.email_exists'));
 
