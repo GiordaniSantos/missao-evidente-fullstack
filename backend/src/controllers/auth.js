@@ -55,29 +55,36 @@ router.post('/logout', async (req, res) => {
 });
 
 router.post('/refresh', async (req, res)=>{
-    const token = getTokenFromHeaders(req.headers);
+    //const token = getTokenFromHeaders(req.headers);
+    const { token } = req.body;
+    
     if(!token) {
-        return res.jsonUnauthorized(null, 'Invalid token 1');
+        return res.jsonBadRequest(null, 'Necessário refresh token');
     }
 
     try{
         const decoded = verifyRefreshJwt(token);
-        const user = await User.findByPK(decoded.id);
-        if(!user) return res.jsonUnauthorized(null, 'Invalid token 2');
+        const user = await User.findByPk(decoded.id);
+        if(!user) return res.jsonBadRequest(null, 'Invalid token 2');
 
         if(decoded.version != user.jwtVersion){
-            return res.jsonUnauthorized(null, 'Invalid token 3');
+            return res.jsonBadRequest(null, 'Invalid token 3');
         }
+        
+        //invalidando refresh token anterior
+        user.jwtVersion++;
 
         const meta = {
             token: generateJwt({ id: user.id}),
+            refreshToken: generateRefreshJwt({id: user.id, version: user.jwtVersion})
         };
+
+        await user.save();
 
         return res.jsonOK(null, null, meta);
 
-
     }catch(error) {
-        return res.jsonUnauthorized(null, 'Invalid token 4');
+        return res.jsonBadRequest(null, 'Invalid token 4');
     }
 
 
