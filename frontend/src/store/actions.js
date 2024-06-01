@@ -13,6 +13,7 @@ export function login({commit}, data) {
     .then(({data}) => {
       commit('setUser', data.data);
       commit('setToken', data.metadata.token)
+      commit('setRefreshToken', data.metadata.refreshToken)
       return data;
     })
 }
@@ -22,6 +23,16 @@ export function registrar({commit}, data) {
     .then(({data}) => {
       commit('setUser', data.data);
       commit('setToken', data.metadata.token)
+      commit('setRefreshToken', data.metadata.refreshToken)
+      return data;
+    })
+}
+
+export function refresh({commit}, data) {
+  return axiosClient.post('/auth/refresh', {token: data})
+    .then(({data}) => {
+      commit('setToken', data.metadata.token)
+      commit('setRefreshToken', data.metadata.refreshToken)
       return data;
     })
 }

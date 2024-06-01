@@ -6,6 +6,7 @@ const store = createStore({
     state: {
         user: {
             token: sessionStorage.getItem('TOKEN'),
+            refreshToken: sessionStorage.getItem('REFRESH_TOKEN'),
             data: sessionStorage.getItem('USER_DATA') ? JSON.parse(sessionStorage.getItem('USER_DATA')) : {}
         },
         visitasCrentes: {

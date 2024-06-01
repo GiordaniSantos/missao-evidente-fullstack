@@ -17,6 +17,15 @@ export function setToken(state, token) {
   }
 }
 
+export function setRefreshToken(state, token) {
+  state.user.refreshToken = token;
+  if (token) {
+    sessionStorage.setItem('REFRESH_TOKEN', token);
+  } else {
+    sessionStorage.removeItem('REFRESH_TOKEN')
+  }
+}
+
 export function setVisitaCrente(state, [loading, data = null]) {
 
   if (data) {
