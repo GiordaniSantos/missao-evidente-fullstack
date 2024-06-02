@@ -1,10 +1,21 @@
 import axiosClient from "../axios";
 
-export function getCurrentUser({commit}, data) {
-  return axiosClient.get('/user', data)
-    .then(({data}) => {
-      commit('setUser', data);
-      return data;
+export function getCurrentUser({commit}, id) {
+  return axiosClient.get(`/user/${id}`)
+}
+
+export function updateUser({commit}, user) {
+  const id = user.id
+  return axiosClient.put(`/user/${id}`, user)
+      .then(({data}) => {
+        commit('setUser', data.data);             
+      })
+}
+
+export function deleteUser({commit}, id) {
+  return axiosClient.delete(`/user/${id}`)
+    .then(() => {
+      commit('setToken', null)            
     })
 }
 
