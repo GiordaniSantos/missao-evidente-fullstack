@@ -625,7 +625,7 @@ export function createMembresia({commit}, membresia) {
 }
 
 export function getMembresia({commit}, id) {
-  return axiosClient.get(`/membresia/${id}`)
+  return axiosClient.get(`/membresia/${id}?tipo=Frequência`)
 }
 
 export function deleteMembresia({commit}, id) {
@@ -635,4 +635,12 @@ export function deleteMembresia({commit}, id) {
 export function updateMembresia({commit}, membresia) {
   const id = membresia.id
   return axiosClient.put(`/membresia/${id}`, membresia)
+}
+
+export function getComungante({commit}) {
+  return axiosClient.get(`/frequencia?tipo=Comungante`)
+}
+
+export function getNaoComungante({commit}) {
+  return axiosClient.get(`/frequencia?tipo=Não Comungante`)
 }

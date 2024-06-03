@@ -41,7 +41,7 @@
             <td colspan="6">
               <Spinner v-if="membresias.loading"/>
               <p v-else class="text-center py-8 text-gray-700">
-                Não há Visitas aos Crentes
+                Não há Membresias
               </p>
             </td>
           </tr>
