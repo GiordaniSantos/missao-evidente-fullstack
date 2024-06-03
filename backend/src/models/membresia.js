@@ -26,6 +26,14 @@ module.exports = (sequelize, DataTypes) => {
                 notNull: { msg: 'O campo quantidade deve ser preenchido'}
             }
         },
+        tipo: {
+            type: DataTypes.ENUM('Frequência', 'Comungante', 'Não Comungante'),
+            allowNull: false,
+            defaultValue: 'Frequência',
+            validate: {
+                notNull: { msg: 'Escolha um tipo de membresia'}
+            }
+        },
         userId: {
             type: DataTypes.INTEGER,
             validate: {

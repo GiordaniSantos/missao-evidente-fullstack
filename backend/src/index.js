@@ -20,6 +20,7 @@ const batismoProfissao = require('./controllers/batismoProfissaoController');
 const bencaoNupcial = require('./controllers/bencaoNupcialController');
 const santaCeia = require('./controllers/santaCeiaController');
 const membresiaController = require('./controllers/membresiaController');
+const frequenciaController = require('./controllers/frequenciaController');
 const dashboardController = require('./controllers/dashboardController');
 const userController = require('./controllers/userController');
 
@@ -51,6 +52,7 @@ app.use('/api/batismo-profissao', batismoProfissao)
 app.use('/api/bencao-nupcial', bencaoNupcial)
 app.use('/api/santa-ceia', santaCeia)
 app.use('/api/membresia', membresiaController)
+app.use('/api/frequencia', frequenciaController)
 app.use('/api/dashboard', dashboardController)
 app.use('/api/user', userController)
 

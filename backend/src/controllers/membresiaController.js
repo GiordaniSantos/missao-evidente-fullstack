@@ -18,6 +18,7 @@ router.get('/', async (req, res) =>{
     const whereCondition = {};
     if (userId) {
         whereCondition.userId = userId;
+        whereCondition.tipo = 'Frequência';
     }
     if (search) {
         whereCondition[Op.and] = [
@@ -70,8 +71,9 @@ router.get('/', async (req, res) =>{
 router.get('/:id', async (req, res)=>{
     const { id } = req.params;
     const userId = req.query.userId;
+    const tipo = req.query.tipo;
 
-    const membresia  = await Membresia.findOne({where: {id:id, userId}});
+    const membresia  = await Membresia.findOne({where: {id:id, userId, tipo}});
     if(!membresia) return res.jsonNotFound();
     return res.json(membresia);
 });
@@ -81,7 +83,12 @@ router.post('/', async(req, res) =>{
 
     try {
         const {nome, quantidade} = req.body;
-        const membresia = await Membresia.create({nome, quantidade, userId});
+        let tipo = "Frequência"
+        if(req.body.tipo){
+            tipo = req.body.tipo
+            console.log(tipo)
+        }
+        const membresia = await Membresia.create({nome, quantidade, tipo, userId});
         return res.jsonOK(membresia);
     } catch (err) {
         let validateErrors = err.errors;
@@ -109,6 +116,9 @@ router.put('/:id', async (req, res) =>{
         const isoDate = formatDate(body['createdAt']);
         membresia.set('createdAt', isoDate,{raw: true});
     }
+    if(body['tipo']){
+        membresia.set('tipo', body['tipo']);
+    }
     membresia.set('nome', body['nome']);
     membresia.set('quantidade', body['quantidade']);
     
@@ -123,7 +133,7 @@ router.put('/:id', async (req, res) =>{
 
     await membresia.save({
         silent: true,
-        fields: ['nome', 'quantidade', 'createdAt']
+        fields: ['nome', 'quantidade', 'tipo', 'createdAt']
     });
 
     return res.jsonOK(membresia);
