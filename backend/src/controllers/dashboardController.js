@@ -33,6 +33,7 @@ router.get('/', async (req, res) =>{
         const membresias = await Membresia.findAll({
             where: {
               userId,
+              tipo: "Frequência",
               createdAt: {
                 [Op.and]: [
                   Sequelize.where(
