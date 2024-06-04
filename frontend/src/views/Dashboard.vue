@@ -185,10 +185,10 @@
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
     <div class="animate-fade-in-down border-l-4 py-7 border-teal-700 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.2s">
-      <template v-if="!loading.batismosInfantisCount">
+      <template v-if="!loading.comungantesCount">
         <div class=" pl-2">
           <span class="text-teal-700 font-medium">COMUNGANTES</span>
-          <h2 class="text-gray-800 font-bold text-lg">{{ batismosInfantisCount }}</h2>
+          <h2 class="text-gray-800 font-bold text-lg">{{ comungantesCount }}</h2>
         </div>
         <button class="bg-gray-200 rounded-full p-2">
           <FontAwesomeIcon :icon="faUsers" class="h-6 w-6 text-gray-500" />
@@ -197,13 +197,13 @@
       <Spinner v-else text="" class=""/>
     </div> 
     <div class="animate-fade-in-down border-l-4 py-7 border-teal-700 bg-white rounded-md shadow-md p-4 flex justify-between items-center" style="animation-delay: 0.3s">
-      <template v-if="!loading.batismosInfantisCount">
+      <template v-if="!loading.naoComungantesCount">
         <div class=" pl-2">
           <span class="text-teal-700 font-medium">NÃO COMUNGANTES</span>
-          <h2 class="text-gray-800 font-bold text-lg">{{ batismosInfantisCount }}</h2>
+          <h2 class="text-gray-800 font-bold text-lg">{{ naoComungantesCount }}</h2>
         </div>
         <button class="bg-gray-200 rounded-full p-2">
-          <FontAwesomeIcon :icon="faUsers" class="h-6 w-6 text-gray-500" />
+          <FontAwesomeIcon :icon="faUsersSlash" class="h-6 w-6 text-gray-500" />
         </button>
       </template>
       <Spinner v-else text="" class=""/>
@@ -256,7 +256,7 @@
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import { faHouse, faCalendarDays, faBook, faUserTie, faBookBible, faPeopleArrows,
    faChildReaching, faPrayingHands, faHandHoldingHeart, faWineGlassAlt, faCross, faHeartBroken,
-   faUserLock, faSyringe, faHospital, faSchool, faChevronRight, faBible, faChild, faUsers} from '@fortawesome/free-solid-svg-icons'
+   faUserLock, faSyringe, faHospital, faSchool, faChevronRight, faBible, faChild, faUsers, faUsersSlash} from '@fortawesome/free-solid-svg-icons'
   import pt from "moment/dist/locale/pt-br"
   import {useStore} from "vuex";
   
@@ -299,12 +299,11 @@
     batismosProfissoesCount: true,
     bencoesNupciaisCount: true,
     santasCeiasCount: true,
-    totalIncome: true,
-    ordersByCountry: true,
+    comungantesCount: true,
+    naoComungantesCount: true,
     visitacaoChart: true,
     frequenciaChart: true,
-    membresias: true,
-    latestOrders: true
+    membresias: true
   })
   const visitasCrentesCount = ref(0);
   const visitasIncredulosCount = ref(0);
@@ -320,6 +319,8 @@
   const batismosProfissoesCount = ref(0);
   const bencoesNupciaisCount = ref(0);
   const santasCeiasCount = ref(0);
+  const comungantesCount = ref(0);
+  const naoComungantesCount = ref(0);
   const visitacaoChart = ref([]);
   const frequenciaChart = ref([]);
   const membresias = ref([]);
@@ -375,7 +376,20 @@
       frequenciaChart.value = chartData
       loading.value.frequenciaChart = false;
     })
-  
+
+    axiosClient.get(`/frequencia?tipo=Comungante`, {params: {userId: currentUser.id}})
+      .then(({data}) => {
+        comungantesCount.value = data.quantidade
+        loading.value.comungantesCount = false;
+      }
+    )
+
+    axiosClient.get(`/frequencia?tipo=N%C3%A3o%20Comungante`, {params: {userId: currentUser.id}})
+      .then(({data}) => {
+        naoComungantesCount.value = data.quantidade
+        loading.value.naoComungantesCount = false;
+      }
+    )
     
     const chartDataVisitacao = {
       labels: [],
