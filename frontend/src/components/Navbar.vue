@@ -21,12 +21,12 @@
             <MenuItem v-slot="{ active }">
               <router-link 
                 :to="{name: 'app.perfil'}" 
-                active-class="text-white bg-indigo-600"
-                exact-active-class="text-white bg-indigo-600"
-                class="flex items-center text-sm p-2 rounded transition-colors hover:text-white hover:bg-indigo-600">
+                active-class="text-white bg-[#0f5d39]"
+                exact-active-class="text-white bg-[#0f5d39]"
+                class="flex items-center text-sm p-2 rounded transition-colors hover:text-white hover:bg-[#0f5d39]">
                  <UserIcon
                   :active="active"
-                  class="mr-2 h-5 w-5 text-indigo-400"
+                  :class="[$route.name === 'app.perfil' ? 'text-white' : 'text-black']+' mr-2 mr-2 h-5 w-5'"
                   aria-hidden="true"
                 />
                 Minha Conta
@@ -36,13 +36,13 @@
               <button
                 @click="logout"
                 :class="[
-                  active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                  active ? 'bg-[#0f5d39] text-white' : 'text-gray-900',
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                 ]"
               >
                 <ArrowLeftOnRectangleIcon
                   :active="active"
-                  class="mr-2 h-5 w-5 text-indigo-400"
+                  class="mr-2 h-5 w-5 text-black"
                   aria-hidden="true"
                 />
                 Sair
